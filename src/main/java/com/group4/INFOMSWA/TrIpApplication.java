@@ -1,13 +1,13 @@
-package com.group04.SWAproject;
+package com.group4.INFOMSWA;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SwAprojectApplication {
+public class TrIpApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SwAprojectApplication.class, args);
+		SpringApplication.run(TrIpApplication.class, args);
 	}
 
 }
