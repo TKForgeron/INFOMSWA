@@ -1,3 +1,7 @@
+# MAC
+.DS_Store
+
+# Miscellaneous
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
