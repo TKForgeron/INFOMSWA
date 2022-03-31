@@ -3,7 +3,12 @@ package com.example.demo.nfcReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class NFCReaderService {
@@ -17,6 +22,24 @@ public class NFCReaderService {
 
     public List<BankCard> getAccounts() {
         return NFCReaderRepository.findAll();
+    }
+
+    public Boolean validateBankCard(BankCard BankCard) {
+        Optional<NFCReaderRepository> bankCardOptional= NFCReaderRepository
+                .findBankCardByNfcId(BankCard.getNfcId());
+
+        Date today = Calendar.getInstance().getTime();
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date expiryDate = Date.from(BankCard.getExpiryDate().atStartOfDay(defaultZoneId).toInstant());
+        if (today.after(expiryDate)) {
+            System.out.println("Your bank card has expired, please go to the service terminal.");
+            throw new IllegalStateException("Bank card expired");
+        }
+
+        if (bankCardOptional.isPresent()) {
+            return true;
+        }
+        return false;
     }
 
 }

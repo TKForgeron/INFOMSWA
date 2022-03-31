@@ -11,5 +11,5 @@ public interface NFCReaderRepository
         extends JpaRepository<BankCard, Long> {
 
     @Query("SELECT s FROM BankCard s WHERE s.nfcId = ?1")
-    Optional<NFCReaderRepository> findStudentByEmail(String email);
+    Optional<NFCReaderRepository> findBankCardByNfcId(Integer nfcId);
 }

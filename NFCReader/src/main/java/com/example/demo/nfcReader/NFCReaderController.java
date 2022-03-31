@@ -21,6 +21,12 @@ public class NFCReaderController {
         return NFCReaderService.getAccounts();
     }
 
+    @PostMapping
+    public void validateBankCard(@RequestBody BankCard BankCard) {
+        NFCReaderService.validateBankCard(BankCard);
+    }
+
+
 /*    @PostMapping
     public void registerNewStudent(@RequestBody BankCard BankCard) {
         NFCReaderService.addNewStudent(BankCard);
