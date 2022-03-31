@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface NFCReaderRepository
         extends JpaRepository<NFCReader, Long> {
 
-    @Query("SELECT s FROM NFCReader s WHERE s.email = ?1")
+    @Query("SELECT s FROM student s WHERE s.email = ?1")
     Optional<NFCReader> findStudentByEmail(String email);
 }

@@ -16,18 +16,23 @@ public class NFCReaderConfig {
     CommandLineRunner commandLineRunner(NFCReaderRepository repository)  {
         return args -> {
             NFCReader henk = new NFCReader(
-                    "Henk",
-                    "henk.broodjeaap@gmail.com",
-                    LocalDate.of(2000, APRIL, 5)
+                    1L,
+                    LocalDate.of(2050, APRIL, 5),
+                    12345
             );
-            NFCReader bert = new NFCReader(
-                    "Bert",
-                    "bert@gmail.com",
-                    LocalDate.of(2005, APRIL, 1)
+            NFCReader iris = new NFCReader(
+                    2L,
+                    LocalDate.of(2000, APRIL, 5),
+                    12345
+            );
+            NFCReader fred = new NFCReader(
+                    3L,
+                    LocalDate.of(2025, APRIL, 5),
+                    10100
             );
 
             repository.saveAll(
-                    List.of(henk, bert)
+                    List.of(henk, iris, fred)
             );
         };
     }
