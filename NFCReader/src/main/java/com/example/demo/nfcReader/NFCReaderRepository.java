@@ -8,8 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface NFCReaderRepository
-        extends JpaRepository<NFCReader, Long> {
+        extends JpaRepository<BankCard, Long> {
 
-    @Query("SELECT s FROM student s WHERE s.email = ?1")
-    Optional<NFCReader> findStudentByEmail(String email);
+    @Query("SELECT s FROM BankCard s WHERE s.nfcId = ?1")
+    Optional<NFCReaderRepository> findStudentByEmail(String email);
 }

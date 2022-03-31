@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table
-public class NFCReader {
+public class BankCard {
     @Id
     @SequenceGenerator(
             name = "nfc_sequence",
@@ -20,16 +20,16 @@ public class NFCReader {
     private LocalDate expiryDate;
     private Integer nfcId;
 
-    public NFCReader() {
+    public BankCard() {
     }
 
-    public NFCReader(Long id, LocalDate expiryDate, Integer nfcId) {
+    public BankCard(Long id, LocalDate expiryDate, Integer nfcId) {
         this.id = id;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
     }
 
-    public NFCReader(LocalDate expiryDate, Integer nfcId) {
+    public BankCard(LocalDate expiryDate, Integer nfcId) {
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
     }

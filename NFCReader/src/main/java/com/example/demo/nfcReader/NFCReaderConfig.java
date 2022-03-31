@@ -15,17 +15,17 @@ public class NFCReaderConfig {
     @Bean
     CommandLineRunner commandLineRunner(NFCReaderRepository repository)  {
         return args -> {
-            NFCReader henk = new NFCReader(
+            BankCard henk = new BankCard(
                     1L,
                     LocalDate.of(2050, APRIL, 5),
                     12345
             );
-            NFCReader iris = new NFCReader(
+            BankCard iris = new BankCard(
                     2L,
                     LocalDate.of(2000, APRIL, 5),
                     12345
             );
-            NFCReader fred = new NFCReader(
+            BankCard fred = new BankCard(
                     3L,
                     LocalDate.of(2025, APRIL, 5),
                     10100

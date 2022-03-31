@@ -17,13 +17,13 @@ public class NFCReaderController {
     }
 
     @GetMapping
-    public List<NFCReader> getStudents() {
-        return NFCReaderService.getStudents();
+    public List<BankCard> getAccounts() {
+        return NFCReaderService.getAccounts();
     }
 
-    @PostMapping
-    public void registerNewStudent(@RequestBody NFCReader NFCReader) {
-        NFCReaderService.addNewStudent(NFCReader);
+/*    @PostMapping
+    public void registerNewStudent(@RequestBody BankCard BankCard) {
+        NFCReaderService.addNewStudent(BankCard);
     }
 
     @DeleteMapping(path = "{studentId}")
@@ -37,6 +37,6 @@ public class NFCReaderController {
             @RequestParam(required=false) String name,
             @RequestParam(required = false) String email) {
         NFCReaderService.updateStudent(studentId, name, email);
-    }
+    }*/
 }
 
