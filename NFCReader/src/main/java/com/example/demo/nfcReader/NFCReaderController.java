@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.nfcReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,28 +7,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/student")
-public class StudentController {
+public class NFCReaderController {
 
-    private final StudentService studentService;
+    private final NFCReaderService NFCReaderService;
 
     @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    public NFCReaderController(NFCReaderService NFCReaderService) {
+        this.NFCReaderService = NFCReaderService;
     }
 
     @GetMapping
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public List<NFCReader> getStudents() {
+        return NFCReaderService.getStudents();
     }
 
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student) {
-        studentService.addNewStudent(student);
+    public void registerNewStudent(@RequestBody NFCReader NFCReader) {
+        NFCReaderService.addNewStudent(NFCReader);
     }
 
     @DeleteMapping(path = "{studentId}")
     public void deleteStudent(@PathVariable("studentId") Long studentId) {
-        studentService.deleteStudent(studentId);
+        NFCReaderService.deleteStudent(studentId);
     }
 
     @PutMapping(path="{studentId}")
@@ -36,7 +36,7 @@ public class StudentController {
             @PathVariable("studentId") Long studentId,
             @RequestParam(required=false) String name,
             @RequestParam(required = false) String email) {
-        studentService.updateStudent(studentId, name, email);
+        NFCReaderService.updateStudent(studentId, name, email);
     }
 }
 

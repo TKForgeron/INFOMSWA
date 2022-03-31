@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.nfcReader;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.Period;
 
 @Entity
 @Table
-public class Student {
+public class NFCReader {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -24,22 +24,22 @@ public class Student {
     @Transient
     private Integer age;
 
-    public Student() {
+    public NFCReader() {
     }
 
-    public Student(Long id,
-                   String name,
-                   String email,
-                   LocalDate dob) {
+    public NFCReader(Long id,
+                     String name,
+                     String email,
+                     LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
     }
 
-    public Student(String name,
-                   String email,
-                   LocalDate dob) {
+    public NFCReader(String name,
+                     String email,
+                     LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;

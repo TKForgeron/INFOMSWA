@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.nfcReader;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -10,17 +10,17 @@ import java.util.List;
 import static java.time.Month.*;
 
 @Configuration
-public class StudentConfig {
+public class NFCReaderConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepository repository)  {
+    CommandLineRunner commandLineRunner(NFCReaderRepository repository)  {
         return args -> {
-            Student henk = new Student(
+            NFCReader henk = new NFCReader(
                     "Henk",
                     "henk.broodjeaap@gmail.com",
                     LocalDate.of(2000, APRIL, 5)
             );
-            Student bert = new Student(
+            NFCReader bert = new NFCReader(
                     "Bert",
                     "bert@gmail.com",
                     LocalDate.of(2005, APRIL, 1)
