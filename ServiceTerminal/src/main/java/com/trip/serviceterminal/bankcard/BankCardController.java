@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class BankCardController {
 
     private Boolean bankCardIsExpired(BankCard BankCard) {
-        return !LocalDate.now().isAfter(BankCard.expiryDate);
+        return LocalDate.now().isAfter(BankCard.getExpiryDate());
     }
 
     // private final BankCardService BankCardService;
@@ -35,8 +35,8 @@ public class BankCardController {
             // bank card data must be given for auth
             @RequestBody(required = true) Integer nfcId,
             @RequestBody(required = true) LocalDate expiryDate,
-            @RequestBody(required = true) String iban) {
-        BankCard bankCard = new BankCard(nfcId, expiryDate, iban);
+            @RequestBody(required = true) String iban) throws URISyntaxException {
+        BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
         if (nfcId != nfcIdPath) {
             if (bankCardIsExpired(bankCard)) {
                 throw new IllegalStateException("Bank card cannot be deleted, you are unauthorized!");
@@ -45,14 +45,14 @@ public class BankCardController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/delete/%s", (String) nfcIdPath));
+        URI uri = new URI(String.format("http://localhost:9000/account/delete/%s", nfcIdPath));
 
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        System.out.println(bankCard.toString(), "\n ...deleted");
+        //System.out.println(bankCard.toString(), "\n ...deleted");
     }
 
     @PutMapping(path = "{nfcIdPath}")
@@ -63,8 +63,8 @@ public class BankCardController {
             @RequestBody(required = false) Integer nfcId, // If one registers a new NFC-card, replacing the old
             // (e.g. expired) one
             @RequestBody(required = false) LocalDate expiryDate,
-            @RequestBody(required = false) String iban) {
-        BankCard bankCard = new BankCard(nfcId, expiryDate, iban);
+            @RequestBody(required = false) String iban) throws URISyntaxException {
+        BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
         if (bankCardIsExpired(bankCard)) {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
@@ -77,7 +77,7 @@ public class BankCardController {
         RestTemplate restTemplate = new RestTemplate();
         bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        System.out.println(bankCard.toString(), "\n ...updated");
+        //System.out.println(bankCard.toString(), "\n ...updated");
     }
 
     @PostMapping(path = "add")
@@ -96,7 +96,7 @@ public class BankCardController {
         RestTemplate restTemplate = new RestTemplate();
         BankCard bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        System.out.println(bankCard.toString(), "\n ...added");
+        //System.out.println(bankCard.toString(), "\n ...added");
 
     }
 }

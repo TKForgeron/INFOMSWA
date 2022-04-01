@@ -3,12 +3,20 @@ package com.example.broker.stationbroker;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="eventstore/**")
+@RequestMapping
 public class StationBrokerController {
 
-    @PostMapping
+    @PostMapping(path="eventstore/**")
     public EventStore addEventStore(@RequestBody EventStore eventStore) {
 
         return eventStore;
     }
+
+    @PostMapping(path="account/add")
+    public BankCard addBankCard(@RequestBody BankCard bankCard) {
+
+        return bankCard;
+    }
+
+
 }
