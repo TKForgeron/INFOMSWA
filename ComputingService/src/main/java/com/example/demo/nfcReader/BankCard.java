@@ -1,4 +1,4 @@
-package com.nfcReaderApp.nfcReader;
+package com.example.demo.nfcReader;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -7,8 +7,15 @@ import java.time.LocalDate;
 @Table
 public class BankCard {
     @Id
-    @SequenceGenerator(name = "nfc_sequence", sequenceName = "nfc_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nfc_sequence")
+    @SequenceGenerator(
+            name = "nfc_sequence",
+            sequenceName = "nfc_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "nfc_sequence"
+    )
     private Long id;
     private LocalDate expiryDate;
     private Integer nfcId;
@@ -60,3 +67,4 @@ public class BankCard {
                 '}';
     }
 }
+
