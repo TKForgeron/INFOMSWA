@@ -1,15 +1,15 @@
-package com.trip.serviceterminal.bankcard;
+// package com.trip.serviceterminal.bankcard;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import org.springframework.data.jpa.repository.Query;
+// import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+// import java.util.Optional;
 
-@Repository
-public interface BankCardRepository
-        extends JpaRepository<BankCard, Long> {
+// @Repository
+// public interface BankCardRepository
+// extends JpaRepository<BankCard, Long> {
 
-    @Query("SELECT s FROM AccountDB s WHERE s.nfcId = ?1")
-    Optional<BankCard> findBankCardByNfcId(Integer nfcId);
-}
+// @Query("SELECT s FROM AccountDB s WHERE s.nfcId = ?1")
+// Optional<BankCard> findBankCardByNfcId(Integer nfcId);
+// }
