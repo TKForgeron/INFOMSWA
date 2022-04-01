@@ -1,6 +1,8 @@
-package com.trip.nfcreaderapp.nfcReader;
+package com.example.broker.stationbroker;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 
 @Entity

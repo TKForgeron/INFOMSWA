@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/nfcreader")
 public class NFCReaderController {
 
     private final NFCReaderService NFCReaderService;
@@ -24,19 +23,19 @@ public class NFCReaderController {
         this.NFCReaderService = NFCReaderService;
     }
 
-    @GetMapping
+    @GetMapping(path = "api/v1/nfcreader")
     public List<BankCard> getAccounts() {
         return NFCReaderService.getAccounts();
     }
 
-    @PostMapping
+    @PostMapping(path = "api/v1/eventstore")
     public void validateBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
         Long uuid = NFCReaderService.validateBankCard(BankCard);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String location = "utrecht";
-        URI uri = new URI(String.format("http://localhost:8080/eventstore/%s", location));
+        URI uri = new URI(String.format("http://localhost:9000/eventstore/%s", location));
 
         EventStore utrecht = new EventStore();
         Date date = Calendar.getInstance().getTime();
