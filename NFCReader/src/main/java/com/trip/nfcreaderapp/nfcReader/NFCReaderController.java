@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 @RestController
 public class NFCReaderController {
 
@@ -58,5 +57,3 @@ public class NFCReaderController {
     }
 
 }
-
-
