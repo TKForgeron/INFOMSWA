@@ -1,4 +1,4 @@
-package com.example.demo.nfcReader;
+package com.trip.nfcreaderapp.nfcReader;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class NFCReaderConfig {
             BankCard iris = new BankCard(
                     2L,
                     LocalDate.of(2000, APRIL, 5),
-                    12345
+                    12346
             );
             BankCard fred = new BankCard(
                     3L,

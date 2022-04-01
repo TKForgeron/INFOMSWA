@@ -1,4 +1,4 @@
-package com.example.demo.nfcReader;
+package com.trip.nfcreaderapp.nfcReader;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,21 +17,21 @@ public class EventStore {
             generator = "event_sequence"
     )
     private Long id;
-    private Integer UUID;
+    private Long UUID;
     private Date date;
     private String location;
 
     public EventStore() {
     }
 
-    public EventStore(Long id, Integer UUID, Date date, String location) {
+    public EventStore(Long id, Long UUID, Date date, String location) {
         this.id = id;
         this.UUID = UUID;
         this.date = date;
         this.location = location;
     }
 
-    public EventStore(Integer UUID, Date date, String location) {
+    public EventStore(Long UUID, Date date, String location) {
         this.UUID = UUID;
         this.date = date;
         this.location = location;
@@ -45,11 +45,11 @@ public class EventStore {
         this.id = id;
     }
 
-    public Integer getUUID() {
+    public Long getUUID() {
         return UUID;
     }
 
-    public void setUUID(Integer UUID) {
+    public void setUUID(Long UUID) {
         this.UUID = UUID;
     }
 
