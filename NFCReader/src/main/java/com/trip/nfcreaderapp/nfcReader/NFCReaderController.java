@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 @RestController
 public class NFCReaderController {
 
@@ -35,7 +36,7 @@ public class NFCReaderController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String location = "utrecht";
-        URI uri = new URI("http://localhost:8080/api/v1/eventstore/utrecht");
+        URI uri = new URI(String.format("http://localhost:9000/eventstore/%s", location));
 
         EventStore utrecht = new EventStore();
         Date date = Calendar.getInstance().getTime();
@@ -44,16 +45,13 @@ public class NFCReaderController {
         utrecht.setUUID(uuid);
 
         HttpEntity<EventStore> httpEntity = new HttpEntity<>(utrecht, headers);
-        System.out.println("Test");
+
         RestTemplate restTemplate = new RestTemplate();
         EventStore eventStore = restTemplate.postForObject(uri, httpEntity, EventStore.class);
 
-    }
+        System.out.println(eventStore.toString());
 
-    @PostMapping(path = "api/v1/eventstore/**")
-    public EventStore addEventStore(@RequestBody EventStore eventStore) {
-
-        return eventStore;
     }
 
 }
+
