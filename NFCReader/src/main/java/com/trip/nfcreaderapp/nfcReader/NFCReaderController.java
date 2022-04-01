@@ -13,9 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 @RestController
-@RequestMapping(path="api/v1/nfcreader")
+@RequestMapping(path = "api/v1/nfcreader")
 public class NFCReaderController {
 
     private final NFCReaderService NFCReaderService;
@@ -55,4 +54,3 @@ public class NFCReaderController {
     }
 
 }
-

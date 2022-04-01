@@ -7,15 +7,8 @@ import java.util.Date;
 @Table
 public class EventStore {
     @Id
-    @SequenceGenerator(
-            name = "event_sequence",
-            sequenceName = "event_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "event_sequence"
-    )
+    @SequenceGenerator(name = "event_sequence", sequenceName = "event_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_sequence")
     private Long id;
     private Long UUID;
     private Date date;

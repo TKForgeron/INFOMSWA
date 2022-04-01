@@ -15,14 +15,14 @@ public class DBManager {
 
     @Bean("eventStore")
     @Primary
-    @ConfigurationProperties(prefix='spring.events-datasource')
-    public DataSource primaryDS(){
+    @ConfigurationProperties(prefix = "spring.events-datasource")
+    public DataSource primaryDS() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean("bankCards")
-    @ConfigurationProperties
-    (prefix='spring.bankcard-datasource')public DataSource secondaryDS() {
+    @ConfigurationProperties(prefix = "spring.bankcard-datasource")
+    public DataSource secondaryDS() {
         return DataSourceBuilder.create().build();
     }
 }
