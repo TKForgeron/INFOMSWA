@@ -46,4 +46,12 @@ public class NFCReaderService {
         return bankCard.getUuid();
     }
 
+    public void addNewBankCard(BankCard bankCard) {
+        Optional<BankCard> bankCardOptional= NFCReaderRepository
+                .findBankCardByNfcId(bankCard.getNfcId());
+        if (bankCardOptional.isPresent()) {
+            throw new IllegalStateException("email taken");
+        }
+        NFCReaderRepository.save(bankCard);
+    }
 }
