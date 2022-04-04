@@ -29,13 +29,12 @@ public class StationBrokerController {
         String location = "utrecht";
         URI uri = new URI(String.format("http://localhost:8080/bankcard/add", location));
 
-        EventStore utrecht = new EventStore();
-        Date date = Calendar.getInstance().getTime();
-        utrecht.setDate(date);
-        utrecht.setLocation(location);
-        utrecht.setUUID(bankCard.getUuid());
+        BankCard newBankCard = new BankCard();
+        newBankCard.setNfcId(bankCard.getNfcId());
+        newBankCard.setUuid(bankCard.getUuid());
+        newBankCard.setExpiryDate(bankCard.getExpiryDate());
 
-        HttpEntity<EventStore> httpEntity = new HttpEntity<>(utrecht, headers);
+        HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         EventStore eventStore = restTemplate.postForObject(uri, httpEntity, EventStore.class);

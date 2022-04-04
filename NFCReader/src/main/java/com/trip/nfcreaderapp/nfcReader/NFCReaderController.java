@@ -54,7 +54,7 @@ public class NFCReaderController {
 
     @PostMapping(path = "bankcard/add")
     public void registerBankCard(@RequestBody BankCard bankCard) {
-        NFCReaderService.addNewBankCard(bankCard);
+        NFCReaderService.registerNewBankCard(bankCard);
     }
 
 }
