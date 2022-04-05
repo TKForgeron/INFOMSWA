@@ -34,7 +34,7 @@ public class BankCardController {
     // this.BankCardService = BankCardService;
     // }
 
-    @DeleteMapping(path = "{nfcIdPath}")
+    @DeleteMapping(path = "delete/{nfcIdPath}")
     public void deleteBankCard(
             @PathVariable("nfcIdPath") Integer nfcIdPath,
             // bank card data must be given for auth
@@ -57,10 +57,10 @@ public class BankCardController {
         RestTemplate restTemplate = new RestTemplate();
         bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        //System.out.println(bankCard.toString(), "\n ...deleted");
+        // System.out.println(bankCard.toString(), "\n ...deleted");
     }
 
-    @PutMapping(path = "{nfcIdPath}")
+    @PutMapping(path = "update/{nfcIdPath}")
     public void updateBankCard(
             // ID to be updated
             @PathVariable("nfcIdPath") Integer nfcIdPath,
@@ -82,7 +82,7 @@ public class BankCardController {
         RestTemplate restTemplate = new RestTemplate();
         bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        //System.out.println(bankCard.toString(), "\n ...updated");
+        // System.out.println(bankCard.toString(), "\n ...updated");
     }
 
     @PostMapping(path = "add")
@@ -107,7 +107,7 @@ public class BankCardController {
         RestTemplate restTemplate = new RestTemplate();
         BankCard pushBankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
-        //System.out.println(bankCard.toString(), "\n ...added");
+        // System.out.println(bankCard.toString(), "\n ...added");
 
     }
 }
