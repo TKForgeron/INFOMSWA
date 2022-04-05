@@ -1,18 +1,21 @@
 package com.trip.accountservice.subscription;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
+
 
 @Entity
 @Table
 public class Account {
     @Id
+    @Column(name="uuid")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Date updatedOn;
     //private String subscriptions;
 
 
@@ -30,6 +33,14 @@ public class Account {
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+    }
+
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date updatedOn) {
+        this.uuid = uuid;
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
+        this.iban = iban;
+        this.updatedOn = updatedOn;
     }
 
     public Long getUuid() {
@@ -64,6 +75,14 @@ public class Account {
         this.iban = iban;
     }
 
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -71,6 +90,7 @@ public class Account {
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
 }

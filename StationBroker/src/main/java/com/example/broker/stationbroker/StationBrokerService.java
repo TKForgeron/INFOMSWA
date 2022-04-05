@@ -14,11 +14,13 @@ public class StationBrokerService {
 
     private final BankCardRepository BankCardRepository;
     private final AccountRepository AccountRepository;
+    private final LastDateInRepository LastDateInRepository;
 
     @Autowired
-    public StationBrokerService(BankCardRepository BankCardRepository, com.example.broker.stationbroker.AccountRepository AccountRepository) {
+    public StationBrokerService(BankCardRepository BankCardRepository, com.example.broker.stationbroker.AccountRepository AccountRepository, com.example.broker.stationbroker.LastDateInRepository LastDateInRepository) {
         this.BankCardRepository = BankCardRepository;
         this.AccountRepository = AccountRepository;
+        this.LastDateInRepository = LastDateInRepository;
     }
 
     public List<BankCard> getAccounts() {
@@ -53,6 +55,7 @@ public class StationBrokerService {
         if (accountOptional.isPresent()) {
             throw new IllegalStateException("User already exists");
         }
+
         AccountRepository.save(account);
     }
 

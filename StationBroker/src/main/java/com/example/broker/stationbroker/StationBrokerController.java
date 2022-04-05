@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -47,7 +48,6 @@ public class StationBrokerController {
         RestTemplate restTemplate = new RestTemplate();
         BankCard bankCard1 = restTemplate.postForObject(uri_NFCReader, httpEntity, BankCard.class);
 
-
     }
 
     public void registerAccountBroker(BankCard bankCard){
@@ -64,7 +64,7 @@ public class StationBrokerController {
     }
 
     @PostMapping(path = "account/pull")
-    public void pushNewAccounts(@RequestBody Date date) throws URISyntaxException {
+    public void pushNewAccounts(@RequestBody Optional<Date> date) throws URISyntaxException {
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
