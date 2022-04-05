@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class NFCReaderService {
 
@@ -47,11 +46,23 @@ public class NFCReaderService {
     }
 
     public void registerNewBankCard(BankCard bankCard) {
-        Optional<BankCard> bankCardOptional= NFCReaderRepository
+        Optional<BankCard> bankCardOptional = NFCReaderRepository
                 .findBankCardByNfcId(bankCard.getNfcId());
         if (bankCardOptional.isPresent()) {
             throw new IllegalStateException("bankcard already exists");
         }
         NFCReaderRepository.save(bankCard);
+    }
+
+    public void updateBankCard(Integer nfcId, BankCard bankCard) {
+        Optional<BankCard> bankCardOptional = NFCReaderRepository
+                .findBankCardByNfcId(nfcId);
+        if (bankCardOptional.isPresent()) {
+            NFCReaderRepository.deleteBankCardByNfcId(nfcId);
+            NFCReaderRepository.save(bankCard);
+        } else {
+            throw new IllegalStateException("bankcard does not exist!");
+        }
+
     }
 }

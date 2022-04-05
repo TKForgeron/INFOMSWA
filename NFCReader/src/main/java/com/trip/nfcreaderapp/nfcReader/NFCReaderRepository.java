@@ -12,4 +12,7 @@ public interface NFCReaderRepository
 
     @Query("SELECT s FROM BankCard s WHERE s.nfcId = ?1")
     Optional<BankCard> findBankCardByNfcId(Integer nfcId);
+
+    @Query("DELETE FROM BankCard s WHERE s.nfcId = ?1")
+    Optional<BankCard> deleteBankCardByNfcId(Integer nfcId);
 }

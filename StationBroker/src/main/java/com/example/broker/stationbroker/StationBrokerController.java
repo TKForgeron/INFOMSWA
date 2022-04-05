@@ -21,13 +21,13 @@ public class StationBrokerController {
         this.StationBrokerService = StationBrokerService;
     }
 
-    @PostMapping(path="eventstore/**")
+    @PostMapping(path = "eventstore/**")
     public EventStore addEventStore(@RequestBody EventStore eventStore) {
 
         return eventStore;
     }
 
-    @PostMapping(path="account/add")
+    @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody BankCard bankCard) throws URISyntaxException {
         // Register account
         registerAccountBroker(bankCard);
@@ -38,7 +38,7 @@ public class StationBrokerController {
         String location = "utrecht";
 
         // Push newly added bankcard to AccountDB located on the NFC readers
-        URI uri_NFCReader = new URI(String.format("http://localhost:8080/bankcard/add", location));
+        URI uri_NFCReader = new URI(String.format("http://localhost:8080/nfcreader/bankcard/add", location));
         BankCard newBankCard = new BankCard();
         newBankCard.setNfcId(bankCard.getNfcId());
         newBankCard.setUuid(bankCard.getUuid());
@@ -50,7 +50,29 @@ public class StationBrokerController {
 
     }
 
-    public void registerAccountBroker(BankCard bankCard){
+    @PutMapping(path = "account/update/{nfcId}")
+    public void registerBankCard(@PathVariable Integer nfcId, @RequestBody BankCard bankCard)
+            throws URISyntaxException {
+
+        // Set headers and location
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String location = "utrecht";
+
+        // Push newly added bankcard to AccountDB located on the NFC readers
+        URI uri_NFCReader = new URI(String.format("http://localhost:8080/nfcreader/bankcard/update", location));
+        BankCard newBankCard = new BankCard();
+        newBankCard.setNfcId(bankCard.getNfcId());
+        newBankCard.setUuid(bankCard.getUuid());
+        newBankCard.setExpiryDate(bankCard.getExpiryDate());
+
+        HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        BankCard bankCard1 = restTemplate.postForObject(uri_NFCReader, httpEntity, BankCard.class);
+
+    }
+
+    public void registerAccountBroker(BankCard bankCard) {
         // Store account on DB of local broker
         Account newAccount = new Account();
         Date now = new Date();
@@ -72,11 +94,11 @@ public class StationBrokerController {
         // Push newly added bankcard to AccountDB located on the AccountService
         URI uri = new URI(String.format("http://localhost:7100/bankcard/add"));
 
-//        HttpEntity<Account> httpEntity = new HttpEntity<>(newAccount, headers);
-//        RestTemplate restTemplate = new RestTemplate();
-//        Account addNewAccount = restTemplate.postForObject(uri, httpEntity, Account.class);
+        // HttpEntity<Account> httpEntity = new HttpEntity<>(newAccount, headers);
+        // RestTemplate restTemplate = new RestTemplate();
+        // Account addNewAccount = restTemplate.postForObject(uri, httpEntity,
+        // Account.class);
 
     }
-
 
 }

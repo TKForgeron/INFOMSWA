@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 
-
 @RestController
 @RequestMapping(path = "api/v1/serviceterminal/bankcard/")
 public class BankCardController {
@@ -75,7 +74,7 @@ public class BankCardController {
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/%s", nfcIdPath));
+        URI uri = new URI(String.format("http://localhost:9000/account/update/%s", nfcIdPath));
 
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
 

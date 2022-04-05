@@ -23,12 +23,13 @@ public class NFCReaderController {
         this.NFCReaderService = NFCReaderService;
     }
 
+    // ONLY FOR TESTING
     @GetMapping(path = "api/v1/nfcreader")
     public List<BankCard> getAccounts() {
         return NFCReaderService.getAccounts();
     }
 
-    @PostMapping(path = "api/v1/eventstore")
+    @PostMapping(path = "api/v1/nfcreader/eventstore")
     public void validateBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
         Long uuid = NFCReaderService.validateBankCard(BankCard);
 
@@ -52,9 +53,14 @@ public class NFCReaderController {
 
     }
 
-    @PostMapping(path = "bankcard/add")
+    @PostMapping(path = "nfcreader/bankcard/add")
     public void registerBankCard(@RequestBody BankCard bankCard) {
         NFCReaderService.registerNewBankCard(bankCard);
+    }
+
+    @PutMapping(path = "nfcreader/bankcard/update/{nfcId}")
+    public void registerBankCard(@RequestBody BankCard bankCard, @PathVariable Integer nfcId) {
+        NFCReaderService.updateBankCard(nfcId, bankCard);
     }
 
 }
