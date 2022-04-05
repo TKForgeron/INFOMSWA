@@ -21,64 +21,37 @@ public class SubscriptionController {
     @DeleteMapping(path = "delete/{nfcIdPath}")
     public void deleteSubscription(
             @PathVariable("nfcIdPath") Integer nfcIdPath,
-            // bank card data must be given for auth
             @RequestBody(required = true) Long id) throws URISyntaxException {
-        Subscription subscription = new Subscription(id);
+        Subscription subscription = new Subscription(id); // subscription with only ID, no discountPercentage or
+                                                          // description
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/delete/%s", nfcIdPath));
+        URI uri = new URI(String.format("http://localhost:9000/account/subscription/delete/%s", nfcIdPath));
 
-        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
+        subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
-        // System.out.println(Subscription.toString(), "\n ...deleted");
+        // System.out.println(subscription.toString(), "\n ...deleted");
     }
 
-    @PutMapping(path = "update/{nfcIdPath}")
-    public void updateSubscription(
-            // ID to be updated
+    @PostMapping(path = "add/{nfcIdPath}")
+    public void addNewSubscription(
             @PathVariable("nfcIdPath") Integer nfcIdPath,
-            // data of that ID to be updated
-            @RequestBody(required = false) Integer nfcId, // If one registers a new NFC-card, replacing the old
-            // (e.g. expired) one
-            @RequestBody(required = false) LocalDate expiryDate,
-            @RequestBody(required = false) String iban) throws URISyntaxException {
-        Subscription Subscription = new Subscription(expiryDate, nfcId, iban);
-        if (SubscriptionIsExpired(Subscription)) {
-            throw new IllegalStateException("Bank card cannot be registered, it is expired!");
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/%s", nfcIdPath));
-
-        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
-
-        // System.out.println(Subscription.toString(), "\n ...updated");
-    }
-
-    @PostMapping(path = "add")
-    public void registerNewSubscription(@RequestBody Subscription Subscription) throws URISyntaxException {
-
-        if (SubscriptionIsExpired(Subscription)) {
-            throw new IllegalStateException("Bank card cannot be registered, it is expired!");
-        }
+            @RequestBody(required = true) Subscription subscription) throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI("http://localhost:9000/account/add");
+        URI uri = new URI(String.format("http://localhost:9000/account/subscription/add/%s", nfcIdPath));
 
-        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        Subscription Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
+        subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
-        // System.out.println(Subscription.toString(), "\n ...added");
+        // System.out.println(subscription.toString(), "\n ...added");
 
     }
 }

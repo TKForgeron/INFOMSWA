@@ -15,7 +15,7 @@ public class Account {
     private Integer nfcId;
     private String iban;
     private Date updatedOn;
-    private List<Subscription> subscriptions;
+    private List<Long> subscriptionIds;
 
     public Account() {
     }
