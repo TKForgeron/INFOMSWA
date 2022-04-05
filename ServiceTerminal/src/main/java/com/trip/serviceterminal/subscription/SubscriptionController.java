@@ -1,4 +1,4 @@
-package com.trip.serviceterminal.bankcard;
+package com.trip.serviceterminal.subscription;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -15,48 +15,30 @@ import java.util.List;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping(path = "api/v1/serviceterminal/bankcard/")
-public class BankCardController {
-
-    private Boolean bankCardIsExpired(BankCard BankCard) {
-        return LocalDate.now().isAfter(BankCard.getExpiryDate());
-    }
-
-    // private final BankCardService BankCardService;
-
-    // @Autowired
-    // public BankCardController(BankCardService BankCardService) {
-    // this.BankCardService = BankCardService;
-    // }
+@RequestMapping(path = "api/v1/serviceterminal/subscription/")
+public class SubscriptionController {
 
     @DeleteMapping(path = "delete/{nfcIdPath}")
-    public void deleteBankCard(
+    public void deleteSubscription(
             @PathVariable("nfcIdPath") Integer nfcIdPath,
             // bank card data must be given for auth
-            @RequestBody(required = true) Integer nfcId,
-            @RequestBody(required = true) LocalDate expiryDate,
-            @RequestBody(required = true) String iban) throws URISyntaxException {
-        BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
-        if (nfcId != nfcIdPath) {
-            if (bankCardIsExpired(bankCard)) {
-                throw new IllegalStateException("Bank card cannot be deleted, you are unauthorized!");
-            }
-        }
+            @RequestBody(required = true) Long id) throws URISyntaxException {
+        Subscription subscription = new Subscription(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         URI uri = new URI(String.format("http://localhost:9000/account/delete/%s", nfcIdPath));
 
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
+        Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
-        // System.out.println(bankCard.toString(), "\n ...deleted");
+        // System.out.println(Subscription.toString(), "\n ...deleted");
     }
 
     @PutMapping(path = "update/{nfcIdPath}")
-    public void updateBankCard(
+    public void updateSubscription(
             // ID to be updated
             @PathVariable("nfcIdPath") Integer nfcIdPath,
             // data of that ID to be updated
@@ -64,26 +46,26 @@ public class BankCardController {
             // (e.g. expired) one
             @RequestBody(required = false) LocalDate expiryDate,
             @RequestBody(required = false) String iban) throws URISyntaxException {
-        BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
-        if (bankCardIsExpired(bankCard)) {
+        Subscription Subscription = new Subscription(expiryDate, nfcId, iban);
+        if (SubscriptionIsExpired(Subscription)) {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         URI uri = new URI(String.format("http://localhost:9000/account/%s", nfcIdPath));
 
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
+        Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
-        // System.out.println(bankCard.toString(), "\n ...updated");
+        // System.out.println(Subscription.toString(), "\n ...updated");
     }
 
     @PostMapping(path = "add")
-    public void registerNewBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
+    public void registerNewSubscription(@RequestBody Subscription Subscription) throws URISyntaxException {
 
-        if (bankCardIsExpired(BankCard)) {
+        if (SubscriptionIsExpired(Subscription)) {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
 
@@ -91,12 +73,12 @@ public class BankCardController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         URI uri = new URI("http://localhost:9000/account/add");
 
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(BankCard, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(Subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        BankCard bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
+        Subscription Subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
-        // System.out.println(bankCard.toString(), "\n ...added");
+        // System.out.println(Subscription.toString(), "\n ...added");
 
     }
 }
