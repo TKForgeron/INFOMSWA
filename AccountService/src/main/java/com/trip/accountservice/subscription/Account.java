@@ -1,5 +1,8 @@
 package com.trip.accountservice.subscription;
 
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -15,6 +18,11 @@ public class Account {
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @Column(name = "updatedOn", nullable = false)
+    @LastModifiedDate
     private Date updatedOn;
     //private String subscriptions;
 

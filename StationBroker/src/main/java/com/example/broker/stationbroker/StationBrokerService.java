@@ -23,8 +23,8 @@ public class StationBrokerService {
         this.LastDateInRepository = LastDateInRepository;
     }
 
-    public List<BankCard> getAccounts() {
-        return BankCardRepository.findAll();
+    public List<Account> getAccounts() {
+        return AccountRepository.findAll();
     }
 
     public Long validateBankCard(BankCard BankCard) {
@@ -57,6 +57,12 @@ public class StationBrokerService {
         }
 
         AccountRepository.save(account);
+    }
+
+    public List<Account> getNewAccounts(Date lastUpdatedOn) {
+        Optional<List<Account>> optionalAccountList= AccountRepository
+                .findAccountsByUpdatedOnAfter(lastUpdatedOn);
+        return optionalAccountList.orElse(null);
     }
 
 }
