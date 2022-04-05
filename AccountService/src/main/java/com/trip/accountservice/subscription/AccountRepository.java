@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface AccountRepository
         extends JpaRepository<Account, Long> {
 
-    @Query("SELECT a FROM Account a WHERE a.nfcId = ?1")
-    Optional<Account> findAccountByNfcId(Integer nfcId);
+    @Query("SELECT a FROM Account a WHERE a.uuid = ?1")
+    Optional<Account> findAccountByUuid(Long uuid);
 
     @Query("SELECT MAX(s.updatedOn) FROM Account s")
     Optional<Date> findTopByUpdatedOn();

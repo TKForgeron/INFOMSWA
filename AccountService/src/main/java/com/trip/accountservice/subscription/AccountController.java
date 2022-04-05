@@ -1,5 +1,6 @@
 package com.trip.accountservice.subscription;
 
+import org.hibernate.engine.transaction.jta.platform.internal.SynchronizationRegistryBasedSynchronizationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
@@ -25,7 +27,7 @@ public class AccountController {
 
 
     @GetMapping(path = "accounts")
-    public List<Account> getAccounts() {
+    public List<Account> printAccounts() {
         return accountService.getAccounts();
     }
 
@@ -35,6 +37,7 @@ public class AccountController {
         // Post date of last update to local broker
         LastUpdatedOn lastUpdate = new LastUpdatedOn();
         lastUpdate.setLastUpdatedOn(accountService.lastUpdatedOn());
+        System.out.println(lastUpdate);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -44,6 +47,27 @@ public class AccountController {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
 
+    }
+
+    @PostMapping(path = "account/add")
+    public void registerBankCard(@RequestBody Account account) {
+        // Register account
+        registerAccount(account);
+    }
+
+    public void registerAccount(Account account) {
+        Optional<Account> accountOptional= accountRepository
+                .findAccountByUuid(account.getUuid());
+        if (accountOptional.isPresent()) {
+            throw new IllegalStateException("User already exists");
+        }
+
+        accountRepository.save(account);
+    }
+
+    @PostMapping(path = "retrieve_update")
+    public void retrieveUpdate(@RequestBody List<Account> accounts) {
+        System.out.println(accounts);
     }
 
 

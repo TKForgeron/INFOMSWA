@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +20,11 @@ public class StationBrokerController {
 
     public StationBrokerController(com.example.broker.stationbroker.StationBrokerService StationBrokerService) {
         this.StationBrokerService = StationBrokerService;
+    }
+
+    @GetMapping(path = "accounts")
+    public List<Account> printAccounts() {
+        return StationBrokerService.getAccounts();
     }
 
     @PostMapping(path = "eventstore/**")
@@ -38,7 +44,8 @@ public class StationBrokerController {
         String location = "utrecht";
 
         // Push newly added bankcard to AccountDB located on the NFC readers
-        URI uri_NFCReader = new URI(String.format("http://localhost:8080/nfcreader/bankcard/add", location));
+//        URI uri_NFCReader = new URI(String.format("http://localhost:8080/nfcreader/bankcard/add", location));
+        URI uri_NFCReader = new URI("http://localhost:8080/nfcreader/bankcard/add");
         BankCard newBankCard = new BankCard();
         newBankCard.setNfcId(bankCard.getNfcId());
         newBankCard.setUuid(bankCard.getUuid());
@@ -46,7 +53,7 @@ public class StationBrokerController {
 
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
         RestTemplate restTemplate = new RestTemplate();
-        BankCard bankCard1 = restTemplate.postForObject(uri_NFCReader, httpEntity, BankCard.class);
+        restTemplate.postForObject(uri_NFCReader, httpEntity, BankCard.class);
 
     }
 
@@ -86,18 +93,19 @@ public class StationBrokerController {
     }
 
     @PostMapping(path = "account/pull")
-    public void pushNewAccounts(@RequestBody Optional<Date> date) throws URISyntaxException {
+    public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
+        List<Account> accounts = StationBrokerService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Push newly added bankcard to AccountDB located on the AccountService
-        URI uri = new URI(String.format("http://localhost:7100/bankcard/add"));
+        URI uri = new URI(String.format("http://localhost:7100/retrieve_update"));
 
-        // HttpEntity<Account> httpEntity = new HttpEntity<>(newAccount, headers);
-        // RestTemplate restTemplate = new RestTemplate();
-        // Account addNewAccount = restTemplate.postForObject(uri, httpEntity,
-        // Account.class);
+        HttpEntity<List<Account>> httpEntity = new HttpEntity<>(accounts, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, Account.class);
 
     }
 
