@@ -1,4 +1,4 @@
-package com.trip.serviceterminal.bankcard;
+package com.example.broker.stationbroker;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface BankCardRepository
         extends JpaRepository<BankCard, Long> {
 
-    @Query("SELECT s FROM AccountDB s WHERE s.nfcId = ?1")
+    @Query("SELECT s FROM BankCard s WHERE s.nfcId = ?1")
     Optional<BankCard> findBankCardByNfcId(Integer nfcId);
 }

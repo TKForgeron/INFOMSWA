@@ -8,8 +8,9 @@ import java.util.Date;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountsAfterDate
+        extends JpaRepository<Account, Long> {
 
-    @Query("SELECT s FROM Account s WHERE s.uuid = ?1")
-    Optional<Account> findAccountByUuid(Long uuid);
+    @Query("SELECT s FROM Account s WHERE s.updatedOn > ?1")
+    Optional<BankCard> findAllByUpdatedOnAfter(Date date);
 }
