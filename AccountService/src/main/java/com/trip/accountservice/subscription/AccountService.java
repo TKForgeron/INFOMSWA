@@ -1,25 +1,26 @@
-package com.example.demo.student;
+package com.trip.accountservice.subscription;
 
-import com.trip.accountservice.subscription.LastDateInRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountService {
 
-    private final LastDateInRepository LastDateInRepository;
+    private final AccountRepository AccountRepository;
 
-    public AccountService(LastDateInRepository LastDateInRepository) {
-        this.LastDateInRepository = LastDateInRepository;
+    public AccountService(AccountRepository AccountRepository) {
+        this.AccountRepository = AccountRepository;
     }
 
-    public Optional<Date> lastUpdatedOn(){
-        Optional<Date> lastUpdated = LastDateInRepository.findTopByUpdatedOn();
-        if (lastUpdated.isPresent()) {
-            return lastUpdated;
-        }
-        return null;
+    public List<Account> getAccounts() {
+        return AccountRepository.findAll();
+    }
+
+    public Date lastUpdatedOn(){
+        Optional<Date> lastUpdated = AccountRepository.findTopByUpdatedOn();
+        return lastUpdated.orElse(null);
     }
 }
