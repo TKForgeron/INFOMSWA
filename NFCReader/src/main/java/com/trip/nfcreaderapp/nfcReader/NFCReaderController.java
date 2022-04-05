@@ -58,8 +58,8 @@ public class NFCReaderController {
         NFCReaderService.registerNewBankCard(bankCard);
     }
 
-    @PutMapping(path = "nfcreader/bankcard/update/{nfcId}")
-    public void registerBankCard(@RequestBody BankCard bankCard, @PathVariable Integer nfcId) {
+    @PutMapping(path = "api/v1/nfcreader/bankcard/update/{nfcId}")
+    public void updateBankCard(@RequestBody BankCard bankCard, @PathVariable Integer nfcId) {
         NFCReaderService.updateBankCard(nfcId, bankCard);
     }
 

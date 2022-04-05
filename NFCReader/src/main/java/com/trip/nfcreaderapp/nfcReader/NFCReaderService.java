@@ -1,5 +1,6 @@
 package com.trip.nfcreaderapp.nfcReader;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,12 +55,19 @@ public class NFCReaderService {
         NFCReaderRepository.save(bankCard);
     }
 
-    public void updateBankCard(Integer nfcId, BankCard bankCard) {
+    @Transactional
+    public void updateBankCard(Integer nfcIdCurrent, BankCard bankCardToBe) {
         Optional<BankCard> bankCardOptional = NFCReaderRepository
-                .findBankCardByNfcId(nfcId);
+                .findBankCardByNfcId(nfcIdCurrent);
         if (bankCardOptional.isPresent()) {
-            NFCReaderRepository.deleteBankCardByNfcId(nfcId);
-            NFCReaderRepository.save(bankCard);
+            BankCard bankCardCurrent = bankCardOptional.get();
+            Integer bankcardUpdated = NFCReaderRepository.updateBankCardByUuid(
+                    bankCardCurrent.getUuid(),
+                    bankCardToBe.getExpiryDate(),
+                    bankCardToBe.getNfcId());
+            System.out.println(bankcardUpdated);
+            NFCReaderRepository.save(bankCardToBe);
+            System.out.println("NFCReaderService.updateBankCard...");
         } else {
             throw new IllegalStateException("bankcard does not exist!");
         }
