@@ -2,6 +2,7 @@ package com.example.broker.stationbroker;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table
@@ -17,14 +18,15 @@ public class BankCard {
     public BankCard() {
     }
 
-    public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+        this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
     }
 
     public Long getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
     public void setUuid(Long uuid) {
@@ -32,7 +34,7 @@ public class BankCard {
     }
 
     public LocalDate getExpiryDate() {
-        return this.expiryDate;
+        return expiryDate;
     }
 
     public void setExpiryDate(LocalDate expiryDate) {
@@ -40,7 +42,7 @@ public class BankCard {
     }
 
     public Integer getNfcId() {
-        return this.nfcId;
+        return nfcId;
     }
 
     public void setNfcId(Integer nfcId) {
@@ -48,41 +50,20 @@ public class BankCard {
     }
 
     public String getIban() {
-        return this.iban;
+        return iban;
     }
 
     public void setIban(String iban) {
         this.iban = iban;
     }
 
-    public BankCard uuid(Long uuid) {
-        setUuid(uuid);
-        return this;
-    }
-
-    public BankCard expiryDate(LocalDate expiryDate) {
-        setExpiryDate(expiryDate);
-        return this;
-    }
-
-    public BankCard nfcId(Integer nfcId) {
-        setNfcId(nfcId);
-        return this;
-    }
-
-    public BankCard iban(String iban) {
-        setIban(iban);
-        return this;
-    }
-
     @Override
     public String toString() {
-        return "{" +
-                " uuid='" + getUuid() + "'" +
-                ", expiryDate='" + getExpiryDate() + "'" +
-                ", nfcId='" + getNfcId() + "'" +
-                ", iban='" + getIban() + "'" +
-                "}";
+        return "BankCard{" +
+                "uuid=" + uuid +
+                ", expiryDate=" + expiryDate +
+                ", nfcId=" + nfcId +
+                ", iban='" + iban + '\'' +
+                '}';
     }
-
 }

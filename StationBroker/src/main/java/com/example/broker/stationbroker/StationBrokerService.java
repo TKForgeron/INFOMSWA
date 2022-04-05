@@ -12,19 +12,21 @@ import java.util.Optional;
 @Service
 public class StationBrokerService {
 
+    private final BankCardRepository BankCardRepository;
     private final AccountRepository AccountRepository;
 
     @Autowired
-    public StationBrokerService(AccountRepository AccountRepository) {
+    public StationBrokerService(BankCardRepository BankCardRepository, com.example.broker.stationbroker.AccountRepository AccountRepository) {
+        this.BankCardRepository = BankCardRepository;
         this.AccountRepository = AccountRepository;
     }
 
     public List<BankCard> getAccounts() {
-        return AccountRepository.findAll();
+        return BankCardRepository.findAll();
     }
 
     public Long validateBankCard(BankCard BankCard) {
-        Optional<BankCard> bankCardOptional = AccountRepository
+        Optional<BankCard> bankCardOptional = BankCardRepository
                 .findBankCardByNfcId(BankCard.getNfcId());
         BankCard bankCard;
 
@@ -44,4 +46,14 @@ public class StationBrokerService {
 
         return bankCard.getUuid();
     }
+
+    public void registerAccount(Account account) {
+        Optional<Account> accountOptional= AccountRepository
+                .findAccountByUuid(account.getUuid());
+        if (accountOptional.isPresent()) {
+            throw new IllegalStateException("User already exists");
+        }
+        AccountRepository.save(account);
+    }
+
 }

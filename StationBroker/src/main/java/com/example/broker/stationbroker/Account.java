@@ -1,37 +1,45 @@
-package com.trip.serviceterminal.bankcard;
-
-// import javax.persistence.*;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+package com.example.broker.stationbroker;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class BankCard {
+@Table
+public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name="uuid")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Date updatedOn;
+    //private String subscriptions;
 
-    public BankCard() {
+
+    public Account() {
     }
 
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(LocalDate expiryDate, Integer nfcId, String iban) {
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
+        this.iban = iban;
+    }
+
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
     }
 
-    public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date updatedOn) {
+        this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.updatedOn = updatedOn;
     }
 
     public Long getUuid() {
@@ -66,13 +74,22 @@ public class BankCard {
         this.iban = iban;
     }
 
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
-        return "BankCard{" +
+        return "Account{" +
                 "uuid=" + uuid +
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
 }

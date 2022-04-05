@@ -1,9 +1,13 @@
 package com.trip.serviceterminal.bankcard;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
+
 
 @RestController
 @RequestMapping(path = "api/v1/serviceterminal/bankcard/")
@@ -81,9 +86,9 @@ public class BankCardController {
     }
 
     @PostMapping(path = "add")
-    public void registerNewBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
+    public void registerNewBankCard(@RequestBody BankCard bankCard) throws URISyntaxException {
 
-        if (bankCardIsExpired(BankCard)) {
+        if (bankCardIsExpired(bankCard)) {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
 
@@ -91,10 +96,16 @@ public class BankCardController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         URI uri = new URI("http://localhost:9000/account/add");
 
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(BankCard, headers);
+        BankCard newBankCard = new BankCard();
+        newBankCard.setUuid(bankCard.getUuid());
+        newBankCard.setNfcId(bankCard.getNfcId());
+        newBankCard.setIban(bankCard.getIban());
+        newBankCard.setExpiryDate(bankCard.getExpiryDate());
+
+        HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        BankCard bankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
+        BankCard pushBankCard = restTemplate.postForObject(uri, httpEntity, BankCard.class);
 
         //System.out.println(bankCard.toString(), "\n ...added");
 

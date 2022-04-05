@@ -1,34 +1,32 @@
-package com.trip.serviceterminal.bankcard;
+package com.trip.accountservice.subscription;
 
-// import javax.persistence.*;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class BankCard {
+@Table
+public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    //private String subscriptions;
 
-    public BankCard() {
+
+    public Account() {
     }
 
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
-        this.uuid = uuid;
+    public Account(LocalDate expiryDate, Integer nfcId, String iban) {
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
     }
 
-    public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+        this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
@@ -68,7 +66,7 @@ public class BankCard {
 
     @Override
     public String toString() {
-        return "BankCard{" +
+        return "Account{" +
                 "uuid=" + uuid +
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
