@@ -1,13 +1,13 @@
-package com.trip.serviceterminal;
+package com.trip.accountservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServiceTerminalApplication {
+public class AccountApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceTerminalApplication.class, args);
+		SpringApplication.run(AccountApplication.class, args);
 	}
 
 }
