@@ -8,15 +8,14 @@ import java.util.Date;
 @Table
 public class Account {
     @Id
-    @Column(name="uuid")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
     private Date updatedOn;
-    //private String subscriptions;
-
+    // private List<Long> subscriptions;
 
     public Account() {
     }
