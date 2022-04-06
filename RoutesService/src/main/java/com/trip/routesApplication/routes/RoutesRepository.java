@@ -14,20 +14,16 @@ import java.util.Optional;
 public interface RoutesRepository
         extends JpaRepository<Route, Long> {
 
-    // @Query("SELECT r FROM Routes r WHERE r.stationA = :stationA AND r.stationB =
-    // :stationB OR SELECT r FROM Routes r WHERE r.stationA = :stationB AND
-    // r.stationB = :stationA")
-    // Optional<Route> findRouteByStations(@Param("stationA") String stationA,
-    // @Param("stationB") String stationB);
-
     @Query("SELECT r FROM Route r WHERE r.stationA = :stationA AND r.stationB = :stationB OR r.stationA = :stationB AND r.stationB = :stationA")
     Optional<Route> findRouteByStationAAndStationB(@Param("stationA") String stationA,
             @Param("stationB") String stationB);
 
-    @Modifying
-    @Query("UPDATE Route r SET r.stationA = :stationA, r.stationB = :stationB, r.price = :price, r.tycoon = :tycoon WHERE r.id = :id")
-    Optional<Route> updateRoute(@Param("id") Long id,
-            @Param("stationA") String stationA, @Param("stationB") String stationB, @Param("price") Float price,
-            @Param("tycoon") String tycoon);
+    // @Modifying
+    // @Query("UPDATE Route r SET r.stationA = :stationA, r.stationB = :stationB,
+    // r.price = :price, r.tycoon = :tycoon WHERE r.id = :id")
+    // Optional<Route> updateRoute(@Param("id") Long id,
+    // @Param("stationA") String stationA, @Param("stationB") String stationB,
+    // @Param("price") Float price,
+    // @Param("tycoon") String tycoon);
 
 }
