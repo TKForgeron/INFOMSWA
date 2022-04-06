@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/route")
+@RequestMapping(path = "api/v1/route/")
 public class RoutesController {
 
     private final RoutesService RoutesService;
@@ -17,8 +17,9 @@ public class RoutesController {
         this.RoutesService = RoutesService;
     }
 
-    @GetMapping(path = "/{stationA}/{stationB}")
-    public Optional<Route> getRouteDetails(@PathVariable("stationA") String stationA, @PathVariable("stationB") String stationB) {
+    @GetMapping(path = "{stationA}/{stationB}")
+    public Optional<Route> getRouteDetails(@PathVariable("stationA") String stationA,
+            @PathVariable("stationB") String stationB) {
         return RoutesService.findRouteByStations(stationA, stationB);
     }
 
@@ -27,15 +28,20 @@ public class RoutesController {
         return RoutesService.getRoutes();
     }
 
-    // @PostMapping
-    // public void registerNewStudent(@RequestBody Routes Routes) {
-    // RoutesService.addNewStudent(Routes);
-    // }
+    @PostMapping(path = "add")
+    public Route addRoute(@RequestBody Route route) {
+        return RoutesService.addRoute(route);
+    }
 
-    // @DeleteMapping(path = "{studentId}")
-    // public void deleteStudent(@PathVariable("studentId") Long studentId) {
-    // RoutesService.deleteStudent(studentId);
-    // }
+    @PutMapping(path = "update/{routeId}")
+    public Route updateRoute(@PathVariable("routeId") Long routeIdToBeUpdated, @RequestBody Route routeToBe) {
+        return RoutesService.updateRoute(routeIdToBeUpdated, routeToBe);
+    }
+
+    @DeleteMapping(path = "delete/{routeId}")
+    public Route deleteRoute(@PathVariable("routeId") Long routeId, @RequestBody Route iKnowWhatRouteIAmDeleting) {
+        return RoutesService.deleteRoute(routeId, iKnowWhatRouteIAmDeleting);
+    }
 
     // @PutMapping(path = "{studentId}")
     // public void updateStudent(

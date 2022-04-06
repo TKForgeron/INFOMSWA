@@ -3,7 +3,7 @@ package com.trip.routesApplication.routes;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "Routes")
 public class Route {
     @Id
     @SequenceGenerator(name = "route_sequence", sequenceName = "route_sequence", allocationSize = 1)
@@ -91,21 +91,20 @@ public class Route {
     }
 
     // own implementation: A-B equals B-A, id doesn't matter
-    // @Override
-    // public boolean equals(Object o) {
-    // if (o == this)
-    // return true;
-    // if (!(o instanceof Route)) {
-    // return false;
-    // }
-    // Route route = (Route) o;
-    // return (Objects.equals(stationA, route.stationA) && Objects.equals(stationB,
-    // route.stationB)
-    // || Objects.equals(stationA, route.stationB) && Objects.equals(stationB,
-    // route.stationA))
-    // && Objects.equals(price, route.price) && Objects.equals(tycoon,
-    // route.tycoon);
-    // }
+    public boolean isLike(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Route)) {
+            return false;
+        }
+        Route route = (Route) o;
+        return (stationA.equals(route.stationA) && stationB.equals(
+                route.stationB)
+                || stationA.equals(route.stationB) && stationB.equals(
+                        route.stationA))
+                && price.equals(route.price) && tycoon.equals(
+                        route.tycoon);
+    }
 
     @Override
     public String toString() {

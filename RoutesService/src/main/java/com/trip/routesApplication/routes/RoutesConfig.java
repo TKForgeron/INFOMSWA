@@ -13,37 +13,37 @@ public class RoutesConfig {
         CommandLineRunner commandLineRunner(RoutesRepository repository) {
                 return args -> {
                         Route Purple = new Route(
-                                        3L,
+                                        1L,
                                         "Apeldoorn",
                                         "Barneveld",
                                         5f,
                                         "Verbindding");
                         Route Blue_BE = new Route(
-                                        3L,
+                                        2L,
                                         "Barneveld",
                                         "Ede",
                                         5f,
                                         "Nederlandse Sportvereniging");
                         Route Blue_EU = new Route(
-                                        2L,
+                                        3L,
                                         "Ede",
                                         "Utrecht",
                                         6f,
                                         "Nederlandse Sportvereniging");
                         Route Green = new Route(
-                                        1L,
+                                        4L,
                                         "Utrecht",
                                         "Amersfoort",
                                         3f,
                                         "Blauwnet-niet");
                         Route Red = new Route(
-                                        3L,
+                                        5L,
                                         "Amersfoort",
                                         "Barneveld",
                                         2f,
                                         "Thais");
                         Route Blue_BU = new Route(
-                                        3L,
+                                        6L,
                                         "Barneveld",
                                         "Utrecht",
                                         7f,
