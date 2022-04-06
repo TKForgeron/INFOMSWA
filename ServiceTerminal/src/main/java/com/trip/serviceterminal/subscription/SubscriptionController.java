@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Flow.Subscription;
 import java.time.LocalDate;
 
 @RestController
@@ -51,6 +52,19 @@ public class SubscriptionController {
         RestTemplate restTemplate = new RestTemplate();
         subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
+        // System.out.println(subscription.toString(), "\n ...added");
+
+    }
+
+    @GetMapping(path = "all")
+    public Subscription[] fetchSubscriptions() throws URISyntaxException {
+
+        URI uri = new URI("http://localhost:4900/subscription/all");
+
+        RestTemplate restTemplate = new RestTemplate();
+        Subscription subscription = restTemplate.getForObject(uri, Subscription[].class);
+
+        return subscription;
         // System.out.println(subscription.toString(), "\n ...added");
 
     }
