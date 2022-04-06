@@ -17,9 +17,11 @@ import java.util.List;
 public class StationBrokerController {
 
     private final StationBrokerService StationBrokerService;
+    private final AccountRepository accountRepository;
 
-    public StationBrokerController(com.example.broker.stationbroker.StationBrokerService StationBrokerService) {
+    public StationBrokerController(com.example.broker.stationbroker.StationBrokerService StationBrokerService, AccountRepository accountRepository) {
         this.StationBrokerService = StationBrokerService;
+        this.accountRepository = accountRepository;
     }
 
     @GetMapping(path = "accounts")
@@ -41,7 +43,6 @@ public class StationBrokerController {
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String location = "utrecht";
 
         // Push newly added bankcard to AccountDB located on the NFC readers
         URI uri = new URI("http://localhost:8080/nfcreader/bankcard/add");
@@ -53,28 +54,6 @@ public class StationBrokerController {
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, BankCard.class);
-
-    }
-
-    @PutMapping(path = "account/update/{nfcId}")
-    public void registerBankCard(@PathVariable Integer nfcId, @RequestBody BankCard bankCard)
-            throws URISyntaxException {
-
-        // Set headers and location
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String location = "utrecht";
-
-        // Push newly added bankcard to AccountDB located on the NFC readers
-        URI uri_NFCReader = new URI(String.format("http://localhost:8080/nfcreader/bankcard/update", location));
-        BankCard newBankCard = new BankCard(
-                bankCard.getUuid(),
-                bankCard.getExpiryDate(),
-                bankCard.getNfcId());
-
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(uri_NFCReader, httpEntity, BankCard.class);
 
     }
 
@@ -91,6 +70,46 @@ public class StationBrokerController {
 
         StationBrokerService.registerAccount(newAccount);
     }
+
+    @PutMapping(path = "account/update/{uuid}")
+    public void updateAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard) throws URISyntaxException {
+
+        Account account = accountRepository.findAccountByUuid(uuid).orElse(null);
+
+        if (bankCard.getIban() != null) {
+            account.setIban(bankCard.getIban());
+        }
+
+        if (bankCard.getExpiryDate() != null) {
+            account.setExpiryDate(bankCard.getExpiryDate());
+        }
+
+        if (bankCard.getNfcId() != null){
+            account.setNfcId(bankCard.getNfcId());
+        }
+
+        Date now = new Date();
+        assert account != null;
+        account.setUpdatedOn(now);
+        accountRepository.save(account);
+        updateBankCard(account);
+    }
+
+    public void updateBankCard(Account account) throws URISyntaxException {
+        // Push newly updated bankcard to AccountDB located on the NFC readers
+        Long uuid = account.getUuid();
+        BankCard newBankCard = new BankCard(
+                uuid,
+                account.getExpiryDate(),
+                account.getNfcId());
+
+        URI uri = new URI(String.format("http://localhost:8080/api/v1/nfcreader/bankcard/update/%s", uuid));
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(uri, newBankCard);
+    }
+
+    @DeleteMapping(path = "account/delete/{uuid}")
+    public void deleteAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard){}
 
     @PostMapping(path = "account/pull")
     public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {

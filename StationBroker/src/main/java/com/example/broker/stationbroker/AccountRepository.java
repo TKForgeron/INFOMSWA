@@ -16,4 +16,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT s FROM Account s WHERE s.updatedOn > ?1")
     Optional<List<Account>> findAccountsByUpdatedOnAfter(Date updatedOn);
+
+    @Query("SELECT s FROM Account s WHERE s.nfcId = ?1")
+    Optional<Account> findAccountByNfcId(Integer nfcId);
+
 }

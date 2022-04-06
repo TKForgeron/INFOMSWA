@@ -34,6 +34,13 @@ public class BankCard {
         this.iban = iban;
     }
 
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+        this.uuid = uuid;
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
+        this.iban = iban;
+    }
+
     public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;

@@ -1,21 +1,15 @@
 package com.trip.serviceterminal.bankcard;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.time.LocalDate;
 
 @RestController
@@ -50,27 +44,24 @@ public class BankCardController {
         restTemplate.postForObject(uri, httpEntity, BankCard.class);
     }
 
-    @PutMapping(path = "update/{nfcIdPath}")
-    public void updateBankCard(
-            // ID to be updated
-            @PathVariable("nfcIdPath") Integer nfcIdPath,
-            // data of that ID to be updated
-            @RequestBody(required = false) Integer nfcId, // If one registers a new NFC-card, replacing the old
-            // (e.g. expired) one
-            @RequestBody(required = false) LocalDate expiryDate,
-            @RequestBody(required = false) String iban) throws URISyntaxException {
-        BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
-        if (bankCardIsExpired(bankCard)) {
-            throw new IllegalStateException("Bank card cannot be registered, it is expired!");
-        }
+    @PostMapping(path = "update/{nfcId}")
+    public void updateBankCard(@RequestBody BankCard bankCard) throws URISyntaxException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/update/%s", nfcIdPath));
+        Long uuid = bankCard.getUuid();
+        URI uri = new URI(String.format("http://localhost:9000/account/update/%s", uuid));
 
-        HttpEntity<BankCard> httpEntity = new HttpEntity<>(bankCard, headers);
+        BankCard newBankCard = new BankCard(
+                uuid,
+                bankCard.getExpiryDate(),
+                bankCard.getNfcId(),
+                bankCard.getIban());
+
+        HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, BankCard.class);
     }
+
 
     @DeleteMapping(path = "delete/{nfcIdPath}")
     public void deleteBankCard(

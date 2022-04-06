@@ -17,10 +17,12 @@ import java.util.List;
 public class NFCReaderController {
 
     private final NFCReaderService NFCReaderService;
+    private final NFCReaderRepository nfcReaderRepository;
 
     @Autowired
-    public NFCReaderController(NFCReaderService NFCReaderService) {
+    public NFCReaderController(NFCReaderService NFCReaderService, NFCReaderRepository nfcReaderRepository) {
         this.NFCReaderService = NFCReaderService;
+        this.nfcReaderRepository = nfcReaderRepository;
     }
 
     // ONLY FOR TESTING
@@ -54,9 +56,9 @@ public class NFCReaderController {
         NFCReaderService.registerNewBankCard(bankCard);
     }
 
-    @PutMapping(path = "api/v1/nfcreader/bankcard/update/{nfcId}")
-    public void updateBankCard(@RequestBody BankCard bankCard, @PathVariable Integer nfcId) {
-        NFCReaderService.updateBankCard(nfcId, bankCard);
+    @PutMapping(path = "api/v1/nfcreader/bankcard/update/{uuid}")
+    public void updateBankCard(@RequestBody BankCard bankCard) {
+        nfcReaderRepository.save(bankCard);
     }
 
 }
