@@ -1,7 +1,6 @@
 package com.trip.serviceterminal.bankcard;
 
-// import javax.persistence.*;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -17,21 +16,30 @@ public class BankCard {
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Date createdAt;
 
     public BankCard() {
     }
 
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
-        this.uuid = uuid;
+    public BankCard(LocalDate expiryDate, Integer nfcId, String iban, Date createdAt) {
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.createdAt = createdAt;
     }
 
     public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+    }
+
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt) {
+        this.uuid = uuid;
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
+        this.iban = iban;
+        this.createdAt = createdAt;
     }
 
     public Long getUuid() {
@@ -66,6 +74,14 @@ public class BankCard {
         this.iban = iban;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "BankCard{" +
@@ -73,6 +89,7 @@ public class BankCard {
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

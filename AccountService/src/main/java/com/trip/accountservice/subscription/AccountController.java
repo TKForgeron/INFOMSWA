@@ -67,6 +67,7 @@ public class AccountController {
 
     @PostMapping(path = "retrieve_update")
     public void retrieveUpdate(@RequestBody List<Account> accounts) {
+        //accountRepository.saveAll(accounts);
         System.out.println(accounts);
     }
 

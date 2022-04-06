@@ -1,13 +1,14 @@
-package com.trip.nfcreaderapp;
+package com.example.broker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NFCReader {
+public class StationBrokerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NFCReader.class, args);
+		SpringApplication.run(StationBrokerApplication.class, args);
 	}
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.broker.stationbroker;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -14,30 +16,19 @@ public class Account {
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Date createdAt;
     private Date updatedOn;
     //private List<Long> subscriptionIds;
 
     public Account() {
     }
 
-    public Account(LocalDate expiryDate, Integer nfcId, String iban) {
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
-        this.iban = iban;
-    }
-
-    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt, Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
-    }
-
-    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date updatedOn) {
-        this.uuid = uuid;
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
-        this.iban = iban;
+        this.createdAt = createdAt;
         this.updatedOn = updatedOn;
     }
 
@@ -73,6 +64,14 @@ public class Account {
         this.iban = iban;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Date getUpdatedOn() {
         return updatedOn;
     }
@@ -88,6 +87,7 @@ public class Account {
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", createdAt=" + createdAt +
                 ", updatedOn=" + updatedOn +
                 '}';
     }

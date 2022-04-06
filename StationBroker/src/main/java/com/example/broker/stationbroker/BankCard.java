@@ -14,15 +14,23 @@ public class BankCard {
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Date createdAt;
 
     public BankCard() {
     }
 
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.createdAt = createdAt;
+    }
+
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId) {
+        this.uuid = uuid;
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
     }
 
     public Long getUuid() {
@@ -57,6 +65,14 @@ public class BankCard {
         this.iban = iban;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "BankCard{" +
@@ -64,6 +80,7 @@ public class BankCard {
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

@@ -13,7 +13,10 @@ public interface AccountRepository
 
     @Query("SELECT a FROM Account a WHERE a.uuid = ?1")
     Optional<Account> findAccountByUuid(Long uuid);
+    Optional<Account> deleteAccountByUuid(Long uuid);
+
 
     @Query("SELECT MAX(s.updatedOn) FROM Account s")
     Optional<Date> findTopByUpdatedOn();
+
 }

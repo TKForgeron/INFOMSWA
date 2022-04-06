@@ -45,12 +45,8 @@ public class NFCReaderController {
         utrecht.setUUID(uuid);
 
         HttpEntity<EventStore> httpEntity = new HttpEntity<>(utrecht, headers);
-
         RestTemplate restTemplate = new RestTemplate();
-        EventStore eventStore = restTemplate.postForObject(uri, httpEntity, EventStore.class);
-
-        System.out.println(eventStore.toString());
-
+        restTemplate.postForObject(uri, httpEntity, EventStore.class);
     }
 
     @PostMapping(path = "nfcreader/bankcard/add")
