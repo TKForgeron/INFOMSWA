@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/route")
@@ -17,7 +18,7 @@ public class RoutesController {
     }
 
     @GetMapping(path = "/{stationA}/{stationB}")
-    public Route getRouteDetails(@PathVariable("stationA") String stationA, @PathVariable("stationB") String stationB) {
+    public Optional<Route> getRouteDetails(@PathVariable("stationA") String stationA, @PathVariable("stationB") String stationB) {
         return RoutesService.findRouteByStations(stationA, stationB);
     }
 

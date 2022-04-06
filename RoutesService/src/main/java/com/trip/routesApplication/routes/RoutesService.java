@@ -3,7 +3,6 @@ package com.trip.routesApplication.routes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +20,8 @@ public class RoutesService {
         return RoutesRepository.findAll();
     }
 
-    public Route findRouteByStations(String stationA, String stationB) {
-        return findRouteByStations(stationA, stationB);
+    public Optional<Route> findRouteByStations(String stationA, String stationB) {
+        return RoutesRepository.findRouteByStationAAndStationB(stationA, stationB);
     }
 
     // public Boolean isValid(Integer nfcId) {
