@@ -14,7 +14,10 @@ import java.util.Optional;
 public interface RoutesRepository
         extends JpaRepository<Route, Long> {
 
-    @Query("SELECT r FROM Routes r WHERE r.stationA = :stationA AND r.stationB = :stationB OR SELECT r FROM Routes r WHERE r.stationA = :stationB AND r.stationB = :stationA")
-    Optional<Route> findRouteByStations(@Param("stationA") String stationA, @Param("stationB") String stationB);
+//    @Query("SELECT r FROM Routes r WHERE r.stationA = :stationA AND r.stationB = :stationB OR SELECT r FROM Routes r WHERE r.stationA = :stationB AND r.stationB = :stationA")
+//    Optional<Route> findRouteByStations(@Param("stationA") String stationA, @Param("stationB") String stationB);
+
+    @Query("SELECT r FROM Route r WHERE r.stationA = :stationA AND r.stationB = :stationB OR r.stationA = :stationB AND r.stationB = :stationA")
+    Optional<Route> findRouteByStationAAndStationB(@Param("stationA") String stationA, @Param("stationB") String stationB);
 
 }
