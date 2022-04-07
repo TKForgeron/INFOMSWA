@@ -29,12 +29,6 @@ public class StationBrokerController {
         return StationBrokerService.getAccounts();
     }
 
-    @PostMapping(path = "eventstore/**")
-    public EventStore addEventStore(@RequestBody EventStore eventStore) {
-
-        return eventStore;
-    }
-
     @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody Account account) throws URISyntaxException {
         // Register account
@@ -54,7 +48,6 @@ public class StationBrokerController {
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, BankCard.class);
-
     }
 
     public void registerAccountBroker(Account account) {
@@ -72,7 +65,28 @@ public class StationBrokerController {
         StationBrokerService.registerAccount(newAccount);
     }
 
-    @PutMapping(path = "account/update/{uuid}")
+    @PostMapping(path="request_update")
+    public void getAccounts() throws URISyntaxException {
+        // Post date of last update to local broker
+        LastUpdatedOn lastUpdate = new LastUpdatedOn();
+        lastUpdate.setLastUpdatedOn(StationBrokerService.lastUpdatedOn());
+        System.out.println(lastUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        URI uri = new URI("http://localhost:7100/account/pull");
+        HttpEntity<LastUpdatedOn> httpEntity = new HttpEntity<>(lastUpdate, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
+    }
+
+    @PostMapping(path = "retrieve_update")
+    public void retrieveUpdate(@RequestBody List<Account> accounts) {
+        accountRepository.saveAll(accounts);
+    }
+
+    /*   @PutMapping(path = "account/update/{uuid}")
     public void updateAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard) throws URISyntaxException {
 
         Account account = accountRepository.findAccountByUuid(uuid).orElse(null);
@@ -123,27 +137,5 @@ public class StationBrokerController {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(String.valueOf(uri), account);
     }
-
-    @PostMapping(path="request_update")
-    public void getAccounts() throws URISyntaxException {
-        // Post date of last update to local broker
-        LastUpdatedOn lastUpdate = new LastUpdatedOn();
-        lastUpdate.setLastUpdatedOn(StationBrokerService.lastUpdatedOn());
-        System.out.println(lastUpdate);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI("http://localhost:7100/account/pull");
-        HttpEntity<LastUpdatedOn> httpEntity = new HttpEntity<>(lastUpdate, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
-
-    }
-
-    @PostMapping(path = "retrieve_update")
-    public void retrieveUpdate(@RequestBody List<Account> accounts) {
-        accountRepository.saveAll(accounts);
-    }
-
+    */
 }

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BankCardRepository
-        extends JpaRepository<BankCard, Long> {
+public interface EventstoreRepository extends JpaRepository<EventStore, Long> {
 
-    @Query("SELECT s FROM BankCard s WHERE s.nfcId = ?1")
-    Optional<BankCard> findBankCardByNfcId(Integer nfcId);
+    @Query("SELECT e FROM EventStore e WHERE e.id = ?1")
+    Optional<EventStore> findEventStoreBy(Long id);
+
 }
