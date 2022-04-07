@@ -1,6 +1,11 @@
 package com.trip.serviceterminal.subscription;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Subscription {
+    @Id
     private Long id;
     private String tycoon;
     private Integer discountPercentage;
@@ -9,34 +14,35 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(Long id) {
+    public Subscription(Long id, String tycoon, Integer discountPercentage, String description) {
         this.id = id;
-    }
-
-    public Subscription(Long id, Integer discountPercentage, String description) {
-        this.id = id;
+        this.tycoon = tycoon;
         this.discountPercentage = discountPercentage;
         this.description = description;
     }
 
+    public Subscription(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
-        return this.id;
-    }
-
-    public String getTycoon() {
-        return this.tycoon;
-    }
-
-    public void setTycoon(String tycoon) {
-        this.tycoon = tycoon;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getTycoon() {
+        return tycoon;
+    }
+
+    public void setTycoon(String tycoon) {
+        this.tycoon = tycoon;
+    }
+
     public Integer getDiscountPercentage() {
-        return this.discountPercentage;
+        return discountPercentage;
     }
 
     public void setDiscountPercentage(Integer discountPercentage) {
@@ -44,35 +50,20 @@ public class Subscription {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Subscription id(Long id) {
-        setId(id);
-        return this;
-    }
-
-    public Subscription discountPercentage(Integer discountPercentage) {
-        setDiscountPercentage(discountPercentage);
-        return this;
-    }
-
-    public Subscription description(String description) {
-        setDescription(description);
-        return this;
-    }
-
     @Override
     public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", discountPercentage='" + getDiscountPercentage() + "'" +
-                ", description='" + getDescription() + "'" +
-                "}";
+        return "Subscript{" +
+                "id=" + id +
+                ", tycoon='" + tycoon + '\'' +
+                ", discountPercentage=" + discountPercentage +
+                ", description='" + description + '\'' +
+                '}';
     }
-
 }
