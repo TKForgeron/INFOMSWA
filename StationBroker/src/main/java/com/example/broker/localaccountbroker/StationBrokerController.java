@@ -1,4 +1,4 @@
-package com.example.broker.stationbroker;
+package com.example.broker.localaccountbroker;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +19,7 @@ public class StationBrokerController {
     private final StationBrokerService StationBrokerService;
     private final AccountRepository accountRepository;
 
-    public StationBrokerController(com.example.broker.stationbroker.StationBrokerService StationBrokerService, AccountRepository accountRepository) {
+    public StationBrokerController(com.example.broker.localaccountbroker.StationBrokerService StationBrokerService, AccountRepository accountRepository) {
         this.StationBrokerService = StationBrokerService;
         this.accountRepository = accountRepository;
     }

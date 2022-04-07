@@ -1,8 +1,6 @@
-package com.example.broker.stationbroker;
+package com.example.broker.localaccountbroker;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
 
 @Entity

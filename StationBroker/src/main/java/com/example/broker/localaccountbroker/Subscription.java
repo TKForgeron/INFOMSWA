@@ -1,4 +1,4 @@
-package com.example.broker.stationbroker;
+package com.example.broker.localaccountbroker;
 
 public class Subscription {
     private Long id;

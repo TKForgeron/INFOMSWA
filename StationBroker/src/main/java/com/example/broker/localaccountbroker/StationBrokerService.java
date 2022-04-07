@@ -1,4 +1,4 @@
-package com.example.broker.stationbroker;
+package com.example.broker.localaccountbroker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class StationBrokerService {
     private final AccountRepository AccountRepository;
 
     @Autowired
-    public StationBrokerService(BankCardRepository BankCardRepository, com.example.broker.stationbroker.AccountRepository AccountRepository) {
+    public StationBrokerService(BankCardRepository BankCardRepository, com.example.broker.localaccountbroker.AccountRepository AccountRepository) {
         this.BankCardRepository = BankCardRepository;
         this.AccountRepository = AccountRepository;
     }

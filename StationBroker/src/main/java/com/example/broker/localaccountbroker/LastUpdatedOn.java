@@ -1,4 +1,4 @@
-package com.example.broker.stationbroker;
+package com.example.broker.localaccountbroker;
 
 import javax.persistence.*;
 import java.util.Date;

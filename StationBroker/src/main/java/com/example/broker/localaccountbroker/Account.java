@@ -1,6 +1,4 @@
-package com.example.broker.stationbroker;
-
-import org.hibernate.annotations.CreationTimestamp;
+package com.example.broker.localaccountbroker;
 
 import javax.persistence.*;
 import java.time.LocalDate;
