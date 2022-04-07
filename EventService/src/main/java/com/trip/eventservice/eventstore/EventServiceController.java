@@ -24,5 +24,31 @@ public class EventServiceController {
         this.eventServiceRepository = eventServiceRepository;
     }
 
+    @GetMapping(path = "eventstores")
+    public List<EventStore> getEventStores() {
+        return eventServiceService.getEventStores();
+    }
+
+    @PostMapping(path="request_update")
+    public void getAccounts() throws URISyntaxException {
+        // Post date of last update to local broker
+        LastUpdatedOn lastUpdate = new LastUpdatedOn();
+        lastUpdate.setLastUpdatedOn(eventServiceService.lastUpdatedOn());
+        System.out.println(lastUpdate);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        URI uri = new URI("http://localhost:9100/account/pull");
+        HttpEntity<LastUpdatedOn> httpEntity = new HttpEntity<>(lastUpdate, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
+    }
+
+    @PostMapping(path = "retrieve_update")
+    public void retrieveUpdate(@RequestBody List<EventStore> eventStores) {
+        eventServiceRepository.saveAll(eventStores);
+    }
+
 
 }

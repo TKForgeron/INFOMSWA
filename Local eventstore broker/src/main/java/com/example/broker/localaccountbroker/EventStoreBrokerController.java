@@ -1,7 +1,13 @@
 package com.example.broker.localaccountbroker;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -25,5 +31,21 @@ public class EventStoreBrokerController {
     public void registerBankCard(
             @RequestBody EventStore eventStore) {
         eventstoreBrokerService.registerEventStore(eventStore);
+    }
+
+    @PostMapping(path = "account/pull")
+    public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
+        List<EventStore> accounts = eventstoreBrokerService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+
+        // Set headers and location
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Push newly added bankcard to AccountDB located on the AccountService
+        URI uri = new URI(String.format("http://localhost:7200/retrieve_update"));
+
+        HttpEntity<List<EventStore>> httpEntity = new HttpEntity<>(accounts, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, EventStore.class);
     }
 }

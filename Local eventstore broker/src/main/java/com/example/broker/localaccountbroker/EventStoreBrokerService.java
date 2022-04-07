@@ -3,7 +3,9 @@ package com.example.broker.localaccountbroker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventStoreBrokerService {
@@ -21,5 +23,11 @@ public class EventStoreBrokerService {
 
     public void registerEventStore(EventStore eventStore) {
         eventStoreRepository.save(eventStore);
+    }
+
+    public List<EventStore> getNewAccounts(Date lastUpdatedOn) {
+        Optional<List<EventStore>> optionalAccountList= eventStoreRepository
+                .findAccountsByUpdatedOnAfter(lastUpdatedOn);
+        return optionalAccountList.orElse(null);
     }
 }
