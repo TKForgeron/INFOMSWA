@@ -1,4 +1,4 @@
-package com.trip.accountservice.subscription;
+package com.trip.eventservice.eventstore;
 
 import javax.persistence.*;
 import java.util.Date;

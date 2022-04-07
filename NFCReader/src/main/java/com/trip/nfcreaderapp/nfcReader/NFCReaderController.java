@@ -38,10 +38,10 @@ public class NFCReaderController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String location = "utrecht";
-        URI uri = new URI(String.format("http://localhost:9000/eventstore/%s", location));
+        URI uri = new URI("http://localhost:9100/eventstore/add");
 
         EventStore utrecht = new EventStore();
-        Date date = Calendar.getInstance().getTime();
+        Date date = new Date();
         utrecht.setDate(date);
         utrecht.setLocation(location);
         utrecht.setUUID(uuid);

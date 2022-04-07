@@ -1,14 +1,13 @@
-package com.example.broker;
+package com.trip.eventservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LocalAccountBrokerApplication {
+public class EventServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LocalAccountBrokerApplication.class, args);
+		SpringApplication.run(EventServiceApplication.class, args);
 	}
-
 
 }
