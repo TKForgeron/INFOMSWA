@@ -19,8 +19,18 @@ public class AccountService {
         return AccountRepository.findAll();
     }
 
-    public Date lastUpdatedOn(){
-        Optional<Date> lastUpdated = AccountRepository.findTopByUpdatedOn();
-        return lastUpdated.orElse(null);
+    public List<Account> getNewAccounts(Date lastUpdatedOn) {
+        Optional<List<Account>> optionalAccountList= AccountRepository
+                .findAccountsByUpdatedOnAfter(lastUpdatedOn);
+        return optionalAccountList.orElse(null);
+    }
+
+    public void registerAccount(Account account) {
+        Optional<Account> accountOptional= AccountRepository
+                .findAccountByUuid(account.getUuid());
+        if (accountOptional.isPresent()) {
+            throw new IllegalStateException("User already exists");
+        }
+        AccountRepository.save(account);
     }
 }

@@ -36,9 +36,9 @@ public class StationBrokerController {
     }
 
     @PostMapping(path = "account/add")
-    public void registerBankCard(@RequestBody BankCard bankCard) throws URISyntaxException {
+    public void registerBankCard(@RequestBody Account account) throws URISyntaxException {
         // Register account
-        registerAccountBroker(bankCard);
+        registerAccountBroker(account);
 
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
@@ -47,9 +47,9 @@ public class StationBrokerController {
         // Push newly added bankcard to AccountDB located on the NFC readers
         URI uri = new URI("http://localhost:8080/nfcreader/bankcard/add");
         BankCard newBankCard = new BankCard(
-                bankCard.getUuid(),
-                bankCard.getExpiryDate(),
-                bankCard.getNfcId());
+                account.getUuid(),
+                account.getExpiryDate(),
+                account.getNfcId());
 
         HttpEntity<BankCard> httpEntity = new HttpEntity<>(newBankCard, headers);
         RestTemplate restTemplate = new RestTemplate();
@@ -57,15 +57,16 @@ public class StationBrokerController {
 
     }
 
-    public void registerAccountBroker(BankCard bankCard) {
+    public void registerAccountBroker(Account account) {
         // Store account on DB of local broker
         Date now = new Date();
         Account newAccount = new Account(
-                bankCard.getUuid(),
-                bankCard.getExpiryDate(),
-                bankCard.getNfcId(),
-                bankCard.getIban(),
-                bankCard.getCreatedAt(),
+                account.getUuid(),
+                account.getExpiryDate(),
+                account.getNfcId(),
+                account.getIban(),
+                account.getDeleted(),
+                account.getCreatedAt(),
                 now);
 
         StationBrokerService.registerAccount(newAccount);
@@ -108,23 +109,41 @@ public class StationBrokerController {
         restTemplate.put(uri, newBankCard);
     }
 
-    @DeleteMapping(path = "account/delete/{uuid}")
-    public void deleteAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard){}
+    @PutMapping(path = "account/delete/{uuid}")
+    public void deleteAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard) throws URISyntaxException {
+        Account account = accountRepository.findAccountByUuid(uuid).orElse(null);
+        account.setDeleted(Boolean.TRUE);
 
-    @PostMapping(path = "account/pull")
-    public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
-        List<Account> accounts = StationBrokerService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+        Date now = new Date();
+        assert account != null;
+        account.setUpdatedOn(now);
+        accountRepository.save(account);
 
-        // Set headers and location
+        URI uri = new URI(String.format("http://localhost:8080/api/v1/nfcreader/bankcard/delete/%s", uuid));
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(String.valueOf(uri), account);
+    }
+
+    @PostMapping(path="request_update")
+    public void getAccounts() throws URISyntaxException {
+        // Post date of last update to local broker
+        LastUpdatedOn lastUpdate = new LastUpdatedOn();
+        lastUpdate.setLastUpdatedOn(StationBrokerService.lastUpdatedOn());
+        System.out.println(lastUpdate);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        URI uri = new URI("http://localhost:7100/account/pull");
+        HttpEntity<LastUpdatedOn> httpEntity = new HttpEntity<>(lastUpdate, headers);
 
-        // Push newly added bankcard to AccountDB located on the AccountService
-        URI uri = new URI(String.format("http://localhost:7100/retrieve_update"));
-
-        HttpEntity<List<Account>> httpEntity = new HttpEntity<>(accounts, headers);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(uri, httpEntity, Account.class);
+        restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
+
+    }
+
+    @PostMapping(path = "retrieve_update")
+    public void retrieveUpdate(@RequestBody List<Account> accounts) {
+        accountRepository.saveAll(accounts);
     }
 
 }

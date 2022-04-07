@@ -63,4 +63,9 @@ public class StationBrokerService {
         return optionalAccountList.orElse(null);
     }
 
+    public Date lastUpdatedOn(){
+        Optional<Date> lastUpdated = AccountRepository.findTopByUpdatedOn();
+        return lastUpdated.orElse(null);
+    }
+
 }

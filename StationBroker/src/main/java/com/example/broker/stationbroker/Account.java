@@ -16,6 +16,7 @@ public class Account {
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Boolean deleted;
     private Date createdAt;
     private Date updatedOn;
     //private List<Long> subscriptionIds;
@@ -23,11 +24,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt, Date updatedOn) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Boolean deleted, Date createdAt, Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.deleted = deleted;
         this.createdAt = createdAt;
         this.updatedOn = updatedOn;
     }
@@ -64,6 +66,14 @@ public class Account {
         this.iban = iban;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -87,6 +97,7 @@ public class Account {
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
+                ", deleted=" + deleted +
                 ", createdAt=" + createdAt +
                 ", updatedOn=" + updatedOn +
                 '}';
