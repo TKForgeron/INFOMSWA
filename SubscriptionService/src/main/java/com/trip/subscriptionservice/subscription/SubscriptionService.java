@@ -39,12 +39,12 @@ public class SubscriptionService {
         Subscription subscriptionCurrent = SubscriptionRepository.findById(subscriptionIdCurrent)
                 .orElseThrow(() -> new IllegalStateException("subscriptionId does not exist!"));
 
-        String tycoon = subscriptionToBe.getTycoon();
+        Integer tycoonId = subscriptionToBe.getTycoonId();
         Integer discountPercentage = subscriptionToBe.getDiscountPercentage();
         String description = subscriptionToBe.getDescription();
 
-        if (tycoon != null && tycoon.length() > 0) {
-            subscriptionCurrent.setTycoon(tycoon);
+        if (tycoonId != null) {
+            subscriptionCurrent.setTycoonId(tycoonId);
         }
         if (discountPercentage != null) {
             subscriptionCurrent.setDiscountPercentage(discountPercentage);

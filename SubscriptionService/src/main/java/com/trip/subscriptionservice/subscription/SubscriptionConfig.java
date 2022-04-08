@@ -19,23 +19,23 @@ public class SubscriptionConfig {
 
                         Subscription offpeakNS = new Subscription(
                                         1L,
-                                        "Nederlandse Sportvereniging",
+                                        3,
                                         40,
                                         "Valid for routes of Nederlandse Sportvereniging tycoon, 40% off outside of peak hours");
                         Subscription offpeakVerbindding = new Subscription(
                                         2L,
-                                        "Verbindding",
+                                        4,
                                         40,
                                         "Valid for routes of Verbindding tycoon, 40% off outside of peak hours");
                         Subscription fullNS = new Subscription(
                                         3L,
-                                        "Nederlandse Sportvereniging",
+                                        3,
                                         100,
                                         "Valid for routes of Nederlandse Sportvereniging tycoon, free travelling 24/7");
 
                         Subscription fullThais = new Subscription(
                                         4L,
-                                        "Utrecht",
+                                        1,
                                         100,
                                         "Valid for routes of Thais tycoon, free travelling 24/7");
 

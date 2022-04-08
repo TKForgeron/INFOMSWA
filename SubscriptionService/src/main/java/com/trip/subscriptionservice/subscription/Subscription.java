@@ -9,16 +9,16 @@ public class Subscription {
     @SequenceGenerator(name = "subscription_sequence", sequenceName = "subscription_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_sequence")
     private Long id;
-    private String tycoon;
+    private Integer tycoonId;
     private Integer discountPercentage;
     private String description;
 
     public Subscription() {
     }
 
-    public Subscription(Long id, String tycoon, Integer discountPercentage, String description) {
+    public Subscription(Long id, Integer tycoonId, Integer discountPercentage, String description) {
         this.id = id;
-        this.tycoon = tycoon;
+        this.tycoonId = tycoonId;
         this.discountPercentage = discountPercentage;
         this.description = description;
     }
@@ -31,12 +31,12 @@ public class Subscription {
         this.id = id;
     }
 
-    public String getTycoon() {
-        return this.tycoon;
+    public Integer getTycoonId() {
+        return this.tycoonId;
     }
 
-    public void setTycoon(String tycoon) {
-        this.tycoon = tycoon;
+    public void setTycoonId(Integer tycoonId) {
+        this.tycoonId = tycoonId;
     }
 
     public Integer getDiscountPercentage() {
@@ -60,8 +60,8 @@ public class Subscription {
         return this;
     }
 
-    public Subscription tycoon(String tycoon) {
-        setTycoon(tycoon);
+    public Subscription tycoonId(Integer tycoonId) {
+        setTycoonId(tycoonId);
         return this;
     }
 
@@ -83,7 +83,7 @@ public class Subscription {
             return false;
         }
         Subscription sub = (Subscription) o;
-        return tycoon.equals(sub.tycoon) && discountPercentage.equals(sub.discountPercentage)
+        return tycoonId.equals(sub.tycoonId) && discountPercentage.equals(sub.discountPercentage)
                 && description.equals(sub.description);
     }
 
@@ -91,7 +91,7 @@ public class Subscription {
     public String toString() {
         return "{" +
                 " id='" + getId() + "'" +
-                ", tycoon='" + getTycoon() + "'" +
+                ", tycoon='" + getTycoonId() + "'" +
                 ", discountPercentage='" + getDiscountPercentage() + "'" +
                 ", description='" + getDescription() + "'" +
                 "}";
