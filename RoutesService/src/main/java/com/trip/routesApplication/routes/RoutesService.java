@@ -21,8 +21,12 @@ public class RoutesService {
         return RoutesRepository.findAll();
     }
 
-    public Optional<Route> findRouteByStations(String stationA, String stationB) {
-        return RoutesRepository.findRouteByStationAAndStationB(stationA, stationB);
+    public Route findRouteByStations(String stationA, String stationB) {
+        Optional<Route> routeOptional = RoutesRepository.findRouteByStationAAndStationB(stationA, stationB);
+        if (!routeOptional.isPresent()) {
+            throw new IllegalStateException("route does not exist!");
+        }
+        return routeOptional.get();
     }
 
     public Route addRoute(Route route) {
@@ -39,9 +43,6 @@ public class RoutesService {
     public Route updateRoute(Long routeIdCurrent, Route routeToBe) {
         Route routeCurrent = RoutesRepository.findById(routeIdCurrent)
                 .orElseThrow(() -> new IllegalStateException("routeId does not exist!"));
-        // RoutesRepository.updateRoute(routeIdCurrent, routeToBe.getStationA(),
-        // routeToBe.getStationB(),
-        // routeToBe.getPrice(), routeToBe.getTycoon());
         String stationA = routeToBe.getStationA();
         String stationB = routeToBe.getStationB();
         Float price = routeToBe.getPrice();
@@ -76,45 +77,4 @@ public class RoutesService {
         return routeCurrent;
 
     }
-    // public Boolean isValid(Integer nfcId) {
-    // Optional<Routes> accountOptional = RoutesRepository
-    // .findAccountByNfcId(nfcId);
-    // if (accountOptional.isPresent()) {
-    // return true;
-    // }
-    // return false;
-    // }
-
-    // public void addNewStudent(Routes Routes) {
-    // Optional<Routes> studentOptional = RoutesRepository
-    // .findStudentByEmail(Routes.getEmail());
-    // if (studentOptional.isPresent()) {
-    // throw new IllegalStateException("email taken");
-    // }
-    // RoutesRepository.save(Routes);
-    // }
-
-    // public void deleteStudent(Long studentId) {
-    // boolean exists = RoutesRepository.existsById(studentId);
-    // if (!exists) {
-    // throw new IllegalStateException(
-    // "student with id: " + studentId + "doesn't exist");
-    // }
-    // RoutesRepository.deleteById(studentId);
-    // }
-
-    // @Transactional
-    // public void updateStudent(Long studentId,
-    // String name,
-    // String email) {
-    // Routes Routes = RoutesRepository.findById(studentId)
-    // .orElseThrow(() -> new IllegalStateException("studentID doesn't exist"));
-
-    // if (name != null && name.length() > 0 && Routes.getName() != name) {
-    // Routes.setName(name);
-    // }
-    // if (email != null && email.length() > 0 && Routes.getEmail() != email) {
-    // Routes.setEmail(email);
-    // }
-    // }
 }

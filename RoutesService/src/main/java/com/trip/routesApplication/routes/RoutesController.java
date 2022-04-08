@@ -18,7 +18,7 @@ public class RoutesController {
     }
 
     @GetMapping(path = "{stationA}/{stationB}")
-    public Optional<Route> getRouteDetails(@PathVariable("stationA") String stationA,
+    public Route getRouteDetails(@PathVariable("stationA") String stationA,
             @PathVariable("stationB") String stationB) {
         return RoutesService.findRouteByStations(stationA, stationB);
     }
@@ -43,11 +43,4 @@ public class RoutesController {
         return RoutesService.deleteRoute(routeId, iKnowWhatRouteIAmDeleting);
     }
 
-    // @PutMapping(path = "{studentId}")
-    // public void updateStudent(
-    // @PathVariable("studentId") Long studentId,
-    // @RequestParam(required = false) String name,
-    // @RequestParam(required = false) String email) {
-    // RoutesService.updateStudent(studentId, name, email);
-    // }
 }

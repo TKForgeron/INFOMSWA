@@ -12,16 +12,18 @@ public class Route {
     private String stationA;
     private String stationB;
     private Float price;
+    private Integer tycoonId;
     private String tycoon;
 
     public Route() {
     }
 
-    public Route(Long id, String stationA, String stationB, Float price, String tycoon) {
+    public Route(Long id, String stationA, String stationB, Float price, Integer tycoonId, String tycoon) {
         this.id = id;
         this.stationA = stationA;
         this.stationB = stationB;
         this.price = price;
+        this.tycoonId = tycoonId;
         this.tycoon = tycoon;
     }
 
@@ -57,6 +59,14 @@ public class Route {
         this.price = price;
     }
 
+    public Integer getTycoonId() {
+        return this.tycoonId;
+    }
+
+    public void setTycoonId(Integer tycoonId) {
+        this.tycoonId = tycoonId;
+    }
+
     public String getTycoon() {
         return this.tycoon;
     }
@@ -82,6 +92,11 @@ public class Route {
 
     public Route price(Float price) {
         setPrice(price);
+        return this;
+    }
+
+    public Route tycoonId(Integer tycoonId) {
+        setTycoonId(tycoonId);
         return this;
     }
 
@@ -113,8 +128,8 @@ public class Route {
                 ", stationA='" + getStationA() + "'" +
                 ", stationB='" + getStationB() + "'" +
                 ", price='" + getPrice() + "'" +
+                ", tycoonId='" + getTycoonId() + "'" +
                 ", tycoon='" + getTycoon() + "'" +
                 "}";
     }
-
 }
