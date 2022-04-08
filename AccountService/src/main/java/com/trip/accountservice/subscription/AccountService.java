@@ -19,8 +19,19 @@ public class AccountService {
         return AccountRepository.findAll();
     }
 
-    public List<Integer> getAccountSubscriptions(Integer nfcId) {
+    public List<Integer> getAccountSubscriptionsByNfcId(Integer nfcId) {
         Optional<Account> acc = AccountRepository.findAccountByNfcId(nfcId);
+        if (!acc.isPresent()) {
+            throw new IllegalStateException("User does not exist");
+        }
+
+        List<Integer> subs = acc.get().getSubscriptionIds();
+
+        return subs;
+    }
+
+    public List<Integer> getAccountSubscriptionsByUuid(Long uuid) {
+        Optional<Account> acc = AccountRepository.findById(uuid);
         if (!acc.isPresent()) {
             throw new IllegalStateException("User does not exist");
         }

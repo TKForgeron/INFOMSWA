@@ -34,8 +34,13 @@ public class AccountController {
     }
 
     @GetMapping(path = "account/{nfcId}/get/subscriptions")
-    public List<Integer> getUserSubscriptions(@PathVariable("nfcId") Integer nfcId) {
-        return AccountService.getAccountSubscriptions(nfcId);
+    public List<Integer> getUserSubscriptionsByNfcId(@PathVariable("nfcId") Integer nfcId) {
+        return AccountService.getAccountSubscriptionsByNfcId(nfcId);
+    }
+
+    @GetMapping(path = "from_billing/account/{uuid}/get/subscriptions")
+    public List<Integer> getUserSubscriptionsByUuid(@PathVariable("uuid") Long uuid) {
+        return AccountService.getAccountSubscriptionsByUuid(uuid);
     }
 
     @PostMapping(path = "account/pull")
