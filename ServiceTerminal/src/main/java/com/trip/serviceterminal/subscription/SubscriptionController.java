@@ -8,11 +8,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping(path = "api/v1/serviceterminal/subscription/")
 public class SubscriptionController {
-    private Subscription[] possibleSubscriptions;
 
     @DeleteMapping(path = "delete/{subId}/for_user/{nfcIdPath}")
     public void deleteSubscription(
@@ -43,7 +45,7 @@ public class SubscriptionController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/%1$s/add/subscription/%2$s", nfcIdPath, subId));
+        URI uri = new URI(String.format("http://localhost:7100/account/%1$s/add/subscription/%2$s", nfcIdPath, subId));
 
         HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
@@ -54,23 +56,32 @@ public class SubscriptionController {
 
     }
 
+    // private Subscription[] allPossibleSubscriptions;
+
     @GetMapping(path = "all")
     public Subscription[] fetchSubscriptions() throws URISyntaxException {
 
         URI uri = new URI("http://localhost:4900/subscription/all");
         RestTemplate restTemplate = new RestTemplate();
-        Subscription[] sub = restTemplate.getForObject(uri, Subscription[].class);
+        Subscription[] allPossibleSubscriptions = restTemplate.getForObject(uri, Subscription[].class);
+        return allPossibleSubscriptions;
         // System.out.println(subscription.toString(), "\n ...added");
 
     }
 
-    @GetMapping(path = "for_user/{nfcId}")
-    public int[] fetchUserSubscriptions(@PathVariable("nfcId") Integer nfcId) throws URISyntaxException {
-        URI uri = new URI(String.format("http://localhost:9000/account/%1$s/get/subscriptions", nfcId));
+    @GetMapping(path = "all/for_user/{nfcId}")
+    public List<Subscription> fetchUserSubscriptions(@PathVariable("nfcId") Integer nfcId) throws URISyntaxException {
+        URI uri = new URI(String.format("http://localhost:7100/account/%1$s/get/subscriptions", nfcId));
         RestTemplate restTemplate = new RestTemplate();
         int[] subIds = restTemplate.getForObject(uri, int[].class);
-
-        return;
+        Subscription[] allPossibleSubscriptions = fetchSubscriptions();
+        List<Subscription> userSubs = new ArrayList<>();
+        for (Subscription sub : allPossibleSubscriptions) {
+            if (Arrays.asList(subIds).contains(sub.getId())) {
+                userSubs.add(sub);
+            }
+        }
+        return userSubs;
         // System.out.println(subscription.toString(), "\n ...added");
 
     }

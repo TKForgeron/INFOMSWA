@@ -68,10 +68,29 @@ public class AccountController {
         System.out.println(accounts);
     }
 
-    @PostMapping(path = "account/%1 $s/get/subscriptions")
-    public void retrieveUpdate(@RequestBody List<Account> accounts) {
-        // accountRepository.saveAll(accounts);
-        System.out.println(accounts);
+    @GetMapping(path = "account/{nfcId}/get/subscriptions")
+    public List<Integer> getUserSubscriptions(@PathVariable("nfcId") Integer nfcId) {
+        Optional<Account> acc = accountRepository.findAccountByNfcId(nfcId);
+        if (!acc.isPresent()) {
+            throw new IllegalStateException("User does not exist");
+        }
+
+        List<Integer> subs = acc.get().getSubscriptionIds();
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+        System.out.println(subs);
+
+        return subs;
     }
 
 }

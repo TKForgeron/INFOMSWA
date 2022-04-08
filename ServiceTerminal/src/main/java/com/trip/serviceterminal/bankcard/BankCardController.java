@@ -16,14 +16,14 @@ import java.time.LocalDate;
 @RequestMapping(path = "api/v1/serviceterminal/bankcard/")
 public class BankCardController {
 
-    private Boolean bankCardIsExpired(BankCard BankCard) {
-        return LocalDate.now().isAfter(BankCard.getExpiryDate());
-    }
+    // private Boolean bankCardIsExpired(BankCard BankCard) {
+    // return LocalDate.now().isAfter(BankCard.getExpiryDate());
+    // }
 
     @PostMapping(path = "add")
     public void registerNewBankCard(@RequestBody BankCard bankCard) throws URISyntaxException {
 
-        if (bankCardIsExpired(bankCard)) {
+        if (bankCard.isExpired()) {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
 
@@ -71,7 +71,7 @@ public class BankCardController {
             @RequestBody(required = true) String iban) throws URISyntaxException {
         BankCard bankCard = new BankCard(expiryDate, nfcId, iban);
         if (nfcId != nfcIdPath) {
-            if (bankCardIsExpired(bankCard)) {
+            if (bankCard.isExpired()) {
                 throw new IllegalStateException("Bank card cannot be deleted, you are unauthorized!");
             }
         }

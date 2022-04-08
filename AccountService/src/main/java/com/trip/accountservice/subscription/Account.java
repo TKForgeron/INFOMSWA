@@ -6,26 +6,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
-
+import java.util.List;
+import java.util.ArrayList;
+// import java.util.Array;
 
 @Entity
 @Table
 public class Account {
     @Id
-    @Column(name="uuid")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private String subscriptionIds;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "updatedOn", nullable = false)
     @LastModifiedDate
     private Date updatedOn;
-    //private String subscriptions;
-
 
     public Account() {
     }
@@ -43,11 +44,13 @@ public class Account {
         this.iban = iban;
     }
 
-    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date updatedOn) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, List<Integer> subscriptionIds,
+            Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.setSubscriptionIds(subscriptionIds);
         this.updatedOn = updatedOn;
     }
 
@@ -91,14 +94,36 @@ public class Account {
         this.updatedOn = updatedOn;
     }
 
+    public List<Integer> getSubscriptionIds() {
+        String[] subArr = this.subscriptionIds.split(",", this.subscriptionIds.length());
+        List<Integer> subIntList = new ArrayList<>();
+
+        for (String s : subArr) {
+            subIntList.add(Integer.parseInt(s));
+        }
+        return subIntList;
+    }
+
+    public void setSubscriptionIds(List<Integer> subscriptions) {
+        List<String> subStrList = new ArrayList<>();
+
+        for (Integer s : subscriptions) {
+            subStrList.add(s.toString());
+        }
+        String subscriptionString = String.join(",", subStrList);
+        this.subscriptionIds = subscriptionString;
+    }
+
     @Override
     public String toString() {
-        return "Account{" +
-                "uuid=" + uuid +
-                ", expiryDate=" + expiryDate +
-                ", nfcId=" + nfcId +
-                ", iban='" + iban + '\'' +
-                ", updatedOn=" + updatedOn +
-                '}';
+        return "{" +
+                " uuid='" + getUuid() + "'" +
+                ", expiryDate='" + getExpiryDate() + "'" +
+                ", nfcId='" + getNfcId() + "'" +
+                ", iban='" + getIban() + "'" +
+                ", subscriptionIds='" + getSubscriptionIds() + "'" +
+                ", updatedOn='" + getUpdatedOn() + "'" +
+                "}";
     }
+
 }

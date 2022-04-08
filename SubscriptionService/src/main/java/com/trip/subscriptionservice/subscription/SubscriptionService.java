@@ -23,7 +23,7 @@ public class SubscriptionService {
 
     public Subscription addSubscription(Subscription subscription) {
         Optional<Subscription> subscriptionOptional = SubscriptionRepository
-                .findByDescription(subscription.getDescription());
+                .findById(subscription.getId());
         if (subscriptionOptional.isPresent()) {
             Subscription subscriptionFromDB = subscriptionOptional.get();
             if (subscriptionFromDB.isLike(subscription)) {

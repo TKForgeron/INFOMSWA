@@ -49,6 +49,10 @@ public class BankCard {
         this.createdAt = createdAt;
     }
 
+    public boolean isExpired() {
+        return LocalDate.now().isAfter(this.expiryDate);
+    }
+
     public Long getUuid() {
         return uuid;
     }

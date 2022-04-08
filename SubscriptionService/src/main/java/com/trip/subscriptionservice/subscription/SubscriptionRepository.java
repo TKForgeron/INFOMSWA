@@ -13,8 +13,7 @@ import java.util.Optional;
 public interface SubscriptionRepository
                 extends JpaRepository<Subscription, Long> {
 
-        @Query("SELECT r FROM Subscription r WHERE r.stationA = :stationA AND r.stationB = :stationB OR r.stationA = :stationB AND r.stationB = :stationA")
-        Optional<Subscription> findSubscriptionByStationAAndStationB(@Param("stationA") String stationA,
-                        @Param("stationB") String stationB);
+        // @Query("SELECT FIRST s FROM Subscription s WHERE s.description = :?1")
+        // Optional<Subscription> findSubscriptionByDescription(String description);
 
 }
