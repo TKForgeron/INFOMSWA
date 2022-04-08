@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +17,7 @@ public interface EventServiceRepository
 
     @Query("SELECT MAX(e.date) FROM EventStore e")
     Optional<Date> findTopByUpdatedOn();
+
+    @Query("SELECT e FROM EventStore e WHERE e.date > ?1")
+    Optional<List<EventStore>> findAccountsByUpdatedOnAfter(Date date);
 }

@@ -30,4 +30,10 @@ public class EventServiceService {
 
         return eventServiceRepository.findTopByUpdatedOn().orElse(date);
     }
+
+    public List<EventStore> getNewEventStores(Date lastUpdatedOn) {
+        Optional<List<EventStore>> optionalAccountList= eventServiceRepository
+                .findAccountsByUpdatedOnAfter(lastUpdatedOn);
+        return optionalAccountList.orElse(null);
+    }
 }

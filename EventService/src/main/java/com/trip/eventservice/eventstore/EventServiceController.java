@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class EventServiceController {
@@ -30,7 +29,7 @@ public class EventServiceController {
     }
 
     @PostMapping(path="request_update")
-    public void getAccounts() throws URISyntaxException {
+    public void getNewEventStores() throws URISyntaxException {
         // Post date of last update to local broker
         LastUpdatedOn lastUpdate = new LastUpdatedOn();
         lastUpdate.setLastUpdatedOn(eventServiceService.lastUpdatedOn());
@@ -48,6 +47,24 @@ public class EventServiceController {
     @PostMapping(path = "retrieve_update")
     public void retrieveUpdate(@RequestBody List<EventStore> eventStores) {
         eventServiceRepository.saveAll(eventStores);
+    }
+
+    @PostMapping(path = "push_update")
+    public void pushUpdate(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
+        // Pull new EventStores
+        getNewEventStores();
+        List<EventStore> eventStores = eventServiceService.getNewEventStores(lastUpdatedOn.getLastUpdatedOn());
+
+        // Set headers and location
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Push newly added accounts to billingService
+        URI uri = new URI(String.format("http://localhost:7300/retrieve_eventstores"));
+
+        HttpEntity<List<EventStore>> httpEntity = new HttpEntity<>(eventStores, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, EventStore.class);
     }
 
 
