@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
-// import java.util.Array;
 
 @Entity
 @Table
@@ -48,6 +47,7 @@ public class Account {
         this.nfcId = nfcId;
         this.iban = iban;
         this.setSubscriptionIds(subscriptionIds);
+        this.deleted = deleted;
         this.createdAt = createdAt;
         this.updatedOn = updatedOn;
     }
@@ -84,8 +84,8 @@ public class Account {
         this.iban = iban;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
+    public Boolean isDeleted() {
+        return this.deleted;
     }
 
     public void setDeleted(Boolean deleted) {

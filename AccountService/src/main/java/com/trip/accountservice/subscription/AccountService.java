@@ -19,14 +19,25 @@ public class AccountService {
         return AccountRepository.findAll();
     }
 
+    public List<Integer> getAccountSubscriptions(Integer nfcId) {
+        Optional<Account> acc = AccountRepository.findAccountByNfcId(nfcId);
+        if (!acc.isPresent()) {
+            throw new IllegalStateException("User does not exist");
+        }
+
+        List<Integer> subs = acc.get().getSubscriptionIds();
+
+        return subs;
+    }
+
     public List<Account> getNewAccounts(Date lastUpdatedOn) {
-        Optional<List<Account>> optionalAccountList= AccountRepository
+        Optional<List<Account>> optionalAccountList = AccountRepository
                 .findAccountsByUpdatedOnAfter(lastUpdatedOn);
         return optionalAccountList.orElse(null);
     }
 
     public void registerAccount(Account account) {
-        Optional<Account> accountOptional= AccountRepository
+        Optional<Account> accountOptional = AccountRepository
                 .findAccountByUuid(account.getUuid());
         if (accountOptional.isPresent()) {
             throw new IllegalStateException("User already exists");

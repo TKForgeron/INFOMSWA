@@ -11,17 +11,17 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
 
-
 @RestController
 @RequestMapping
 public class StationBrokerController {
 
     private final StationBrokerService StationBrokerService;
-    private final AccountRepository accountRepository;
+    private final AccountRepository AccountRepository;
 
-    public StationBrokerController(com.example.broker.localaccountbroker.StationBrokerService StationBrokerService, AccountRepository accountRepository) {
+    public StationBrokerController(com.example.broker.localaccountbroker.StationBrokerService StationBrokerService,
+            AccountRepository AccountRepository) {
         this.StationBrokerService = StationBrokerService;
-        this.accountRepository = accountRepository;
+        this.AccountRepository = AccountRepository;
     }
 
     @GetMapping(path = "accounts")
@@ -65,7 +65,7 @@ public class StationBrokerController {
         StationBrokerService.registerAccount(newAccount);
     }
 
-    @PostMapping(path="request_update")
+    @PostMapping(path = "request_update")
     public void getAccounts() throws URISyntaxException {
         // Post date of last update to local broker
         LastUpdatedOn lastUpdate = new LastUpdatedOn();
@@ -83,59 +83,64 @@ public class StationBrokerController {
 
     @PostMapping(path = "retrieve_update")
     public void retrieveUpdate(@RequestBody List<Account> accounts) {
-        accountRepository.saveAll(accounts);
+        AccountRepository.saveAll(accounts);
     }
 
-    /*   @PutMapping(path = "account/update/{uuid}")
-    public void updateAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard) throws URISyntaxException {
-
-        Account account = accountRepository.findAccountByUuid(uuid).orElse(null);
-
-        if (bankCard.getIban() != null) {
-            account.setIban(bankCard.getIban());
-        }
-
-        if (bankCard.getExpiryDate() != null) {
-            account.setExpiryDate(bankCard.getExpiryDate());
-        }
-
-        if (bankCard.getNfcId() != null){
-            account.setNfcId(bankCard.getNfcId());
-        }
-
-        Date now = new Date();
-        assert account != null;
-        account.setUpdatedOn(now);
-        accountRepository.save(account);
-        updateBankCard(account);
-    }
-
-    public void updateBankCard(Account account) throws URISyntaxException {
-        // Push newly updated bankcard to AccountDB located on the NFC readers
-        Long uuid = account.getUuid();
-        BankCard newBankCard = new BankCard(
-                uuid,
-                account.getExpiryDate(),
-                account.getNfcId());
-
-        URI uri = new URI(String.format("http://localhost:8080/api/v1/nfcreader/bankcard/update/%s", uuid));
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put(uri, newBankCard);
-    }
-
-    @PutMapping(path = "account/delete/{uuid}")
-    public void deleteAccount(@PathVariable Long uuid, @RequestBody BankCard bankCard) throws URISyntaxException {
-        Account account = accountRepository.findAccountByUuid(uuid).orElse(null);
-        account.setDeleted(Boolean.TRUE);
-
-        Date now = new Date();
-        assert account != null;
-        account.setUpdatedOn(now);
-        accountRepository.save(account);
-
-        URI uri = new URI(String.format("http://localhost:8080/api/v1/nfcreader/bankcard/delete/%s", uuid));
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(String.valueOf(uri), account);
-    }
-    */
+    /*
+     * @PutMapping(path = "account/update/{uuid}")
+     * public void updateAccount(@PathVariable Long uuid, @RequestBody BankCard
+     * bankCard) throws URISyntaxException {
+     * 
+     * Account account = AccountRepository.findAccountByUuid(uuid).orElse(null);
+     * 
+     * if (bankCard.getIban() != null) {
+     * account.setIban(bankCard.getIban());
+     * }
+     * 
+     * if (bankCard.getExpiryDate() != null) {
+     * account.setExpiryDate(bankCard.getExpiryDate());
+     * }
+     * 
+     * if (bankCard.getNfcId() != null){
+     * account.setNfcId(bankCard.getNfcId());
+     * }
+     * 
+     * Date now = new Date();
+     * assert account != null;
+     * account.setUpdatedOn(now);
+     * AccountRepository.save(account);
+     * updateBankCard(account);
+     * }
+     * 
+     * public void updateBankCard(Account account) throws URISyntaxException {
+     * // Push newly updated bankcard to AccountDB located on the NFC readers
+     * Long uuid = account.getUuid();
+     * BankCard newBankCard = new BankCard(
+     * uuid,
+     * account.getExpiryDate(),
+     * account.getNfcId());
+     * 
+     * URI uri = new URI(String.format(
+     * "http://localhost:8080/api/v1/nfcreader/bankcard/update/%s", uuid));
+     * RestTemplate restTemplate = new RestTemplate();
+     * restTemplate.put(uri, newBankCard);
+     * }
+     * 
+     * @PutMapping(path = "account/delete/{uuid}")
+     * public void deleteAccount(@PathVariable Long uuid, @RequestBody BankCard
+     * bankCard) throws URISyntaxException {
+     * Account account = AccountRepository.findAccountByUuid(uuid).orElse(null);
+     * account.setDeleted(Boolean.TRUE);
+     * 
+     * Date now = new Date();
+     * assert account != null;
+     * account.setUpdatedOn(now);
+     * AccountRepository.save(account);
+     * 
+     * URI uri = new URI(String.format(
+     * "http://localhost:8080/api/v1/nfcreader/bankcard/delete/%s", uuid));
+     * RestTemplate restTemplate = new RestTemplate();
+     * restTemplate.delete(String.valueOf(uri), account);
+     * }
+     */
 }

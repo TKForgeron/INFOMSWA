@@ -86,7 +86,7 @@ public class BankCard {
         this.createdAt = createdAt;
     }
 
-    public Boolean getDeleted() {
+    public Boolean isDeleted() {
         return deleted;
     }
 
@@ -96,13 +96,14 @@ public class BankCard {
 
     @Override
     public String toString() {
-        return "BankCard{" +
-                "uuid=" + uuid +
-                ", expiryDate=" + expiryDate +
-                ", nfcId=" + nfcId +
-                ", iban='" + iban + '\'' +
-                ", createdAt=" + createdAt +
-                ", deleted=" + deleted +
-                '}';
+        return "{" +
+                " uuid='" + getUuid() + "'" +
+                ", expiryDate='" + getExpiryDate() + "'" +
+                ", nfcId='" + getNfcId() + "'" +
+                ", iban='" + getIban() + "'" +
+                ", createdAt='" + getCreatedAt() + "'" +
+                ", deleted='" + isDeleted() + "'" +
+                "}";
     }
+
 }

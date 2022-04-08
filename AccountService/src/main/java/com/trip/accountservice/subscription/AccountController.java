@@ -11,42 +11,36 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
 
-    private final AccountService accountService;
+    private final AccountService AccountService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
+    public AccountController(AccountService AccountService) {
+        this.AccountService = AccountService;
     }
 
     @GetMapping(path = "accounts")
     public List<Account> printAccounts() {
-        return accountService.getAccounts();
+        return AccountService.getAccounts();
     }
 
     @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody Account account) {
-        accountService.registerAccount(account);
+        AccountService.registerAccount(account);
     }
 
     @GetMapping(path = "account/{nfcId}/get/subscriptions")
     public List<Integer> getUserSubscriptions(@PathVariable("nfcId") Integer nfcId) {
-        Optional<Account> acc = accountRepository.findAccountByNfcId(nfcId);
-        if (!acc.isPresent()) {
-            throw new IllegalStateException("User does not exist");
-        }
-
-        List<Integer> subs = acc.get().getSubscriptionIds();
-
-        return subs;
+        return AccountService.getAccountSubscriptions(nfcId);
     }
 
     @PostMapping(path = "account/pull")
     public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
-        List<Account> accounts = accountService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+        List<Account> accounts = AccountService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
 
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
