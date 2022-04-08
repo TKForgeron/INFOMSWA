@@ -62,7 +62,6 @@ public class BankCardController {
         restTemplate.postForObject(uri, httpEntity, BankCard.class);
     }
 
-
     @DeleteMapping(path = "delete/{nfcIdPath}")
     public void deleteBankCard(
             @PathVariable("nfcIdPath") Integer nfcIdPath,

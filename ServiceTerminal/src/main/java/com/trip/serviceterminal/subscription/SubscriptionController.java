@@ -8,14 +8,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.Flow;
 
 @RestController
 @RequestMapping(path = "api/v1/serviceterminal/subscription/")
 public class SubscriptionController {
+    private Subscription[] possibleSubscriptions;
 
-    @DeleteMapping(path = "delete/{nfcIdPath}")
+    @DeleteMapping(path = "delete/{subId}/for_user/{nfcIdPath}")
     public void deleteSubscription(
+            @PathVariable("subId") Integer subId,
             @PathVariable("nfcIdPath") Integer nfcIdPath,
             @RequestBody Long id) throws URISyntaxException {
 
@@ -23,41 +24,53 @@ public class SubscriptionController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/subscription/delete/%s", nfcIdPath));
+        URI uri = new URI(
+                String.format("http://localhost:9000/account/%1$s/delete/subscription/%2$s", nfcIdPath, subId));
 
         HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(uri, httpEntity, Flow.Subscription.class);
+        restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
         // System.out.println(subscription.toString(), "\n ...deleted");
     }
 
-    @PostMapping(path = "add/{nfcIdPath}")
+    @PostMapping(path = "add/{subId}/for_user/{nfcIdPath}")
     public void addNewSubscription(
+            @PathVariable("subId") Integer subId,
             @PathVariable("nfcIdPath") Integer nfcIdPath,
-            @RequestBody(required = true) Flow.Subscription subscription) throws URISyntaxException {
+            @RequestBody(required = true) Subscription subscription) throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:9000/account/subscription/add/%s", nfcIdPath));
+        URI uri = new URI(String.format("http://localhost:9000/account/%1$s/add/subscription/%2$s", nfcIdPath, subId));
 
-        HttpEntity<Flow.Subscription> httpEntity = new HttpEntity<>(subscription, headers);
+        HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        subscription = restTemplate.postForObject(uri, httpEntity, Flow.Subscription.class);
+        subscription = restTemplate.postForObject(uri, httpEntity, Subscription.class);
 
         // System.out.println(subscription.toString(), "\n ...added");
 
     }
 
     @GetMapping(path = "all")
-    public void fetchSubscriptions() throws URISyntaxException {
+    public Subscription[] fetchSubscriptions() throws URISyntaxException {
 
         URI uri = new URI("http://localhost:4900/subscription/all");
-
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForObject(uri, Flow.Subscription[].class);
+        Subscription[] sub = restTemplate.getForObject(uri, Subscription[].class);
+        // System.out.println(subscription.toString(), "\n ...added");
+
+    }
+
+    @GetMapping(path = "for_user/{nfcId}")
+    public int[] fetchUserSubscriptions(@PathVariable("nfcId") Integer nfcId) throws URISyntaxException {
+        URI uri = new URI(String.format("http://localhost:9000/account/%1$s/get/subscriptions", nfcId));
+        RestTemplate restTemplate = new RestTemplate();
+        int[] subIds = restTemplate.getForObject(uri, int[].class);
+
+        return;
         // System.out.println(subscription.toString(), "\n ...added");
 
     }

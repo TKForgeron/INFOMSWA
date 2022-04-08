@@ -25,14 +25,12 @@ public class AccountController {
         this.accountRepository = accountRepository;
     }
 
-
     @GetMapping(path = "accounts")
     public List<Account> printAccounts() {
         return accountService.getAccounts();
     }
 
-
-    @PostMapping(path="request_update")
+    @PostMapping(path = "request_update")
     public void getAccounts() throws URISyntaxException {
         // Post date of last update to local broker
         LastUpdatedOn lastUpdate = new LastUpdatedOn();
@@ -46,7 +44,6 @@ public class AccountController {
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
-
     }
 
     @PostMapping(path = "account/add")
@@ -56,7 +53,7 @@ public class AccountController {
     }
 
     public void registerAccount(Account account) {
-        Optional<Account> accountOptional= accountRepository
+        Optional<Account> accountOptional = accountRepository
                 .findAccountByUuid(account.getUuid());
         if (accountOptional.isPresent()) {
             throw new IllegalStateException("User already exists");
@@ -67,9 +64,14 @@ public class AccountController {
 
     @PostMapping(path = "retrieve_update")
     public void retrieveUpdate(@RequestBody List<Account> accounts) {
-        //accountRepository.saveAll(accounts);
+        // accountRepository.saveAll(accounts);
         System.out.println(accounts);
     }
 
+    @PostMapping(path = "account/%1 $s/get/subscriptions")
+    public void retrieveUpdate(@RequestBody List<Account> accounts) {
+        // accountRepository.saveAll(accounts);
+        System.out.println(accounts);
+    }
 
 }
