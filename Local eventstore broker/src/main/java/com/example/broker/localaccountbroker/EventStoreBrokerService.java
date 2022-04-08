@@ -25,7 +25,7 @@ public class EventStoreBrokerService {
         eventStoreRepository.save(eventStore);
     }
 
-    public List<EventStore> getNewAccounts(Date lastUpdatedOn) {
+    public List<EventStore> getNewEventStores(Date lastUpdatedOn) {
         Optional<List<EventStore>> optionalAccountList= eventStoreRepository
                 .findAccountsByUpdatedOnAfter(lastUpdatedOn);
         return optionalAccountList.orElse(null);

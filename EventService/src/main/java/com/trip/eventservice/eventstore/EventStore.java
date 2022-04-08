@@ -21,21 +21,16 @@ public class EventStore {
     private Long UUID;
     private Date date;
     private String location;
+    private Integer tycoon;
 
     public EventStore() {
     }
 
-    public EventStore(Long id, Long UUID, Date date, String location) {
-        this.id = id;
+    public EventStore(Long UUID, Date date, String location, Integer tycoon) {
         this.UUID = UUID;
         this.date = date;
         this.location = location;
-    }
-
-    public EventStore(Long UUID, Date date, String location) {
-        this.UUID = UUID;
-        this.date = date;
-        this.location = location;
+        this.tycoon = tycoon;
     }
 
     public Long getId() {
@@ -70,6 +65,14 @@ public class EventStore {
         this.location = location;
     }
 
+    public Integer getTycoon() {
+        return tycoon;
+    }
+
+    public void setTycoon(Integer tycoon) {
+        this.tycoon = tycoon;
+    }
+
     @Override
     public String toString() {
         return "EventStore{" +
@@ -77,6 +80,7 @@ public class EventStore {
                 ", UUID=" + UUID +
                 ", date=" + date +
                 ", location='" + location + '\'' +
+                ", tycoon=" + tycoon +
                 '}';
     }
 }

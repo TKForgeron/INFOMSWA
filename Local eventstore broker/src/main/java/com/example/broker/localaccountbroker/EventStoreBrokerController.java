@@ -34,8 +34,8 @@ public class EventStoreBrokerController {
     }
 
     @PostMapping(path = "account/pull")
-    public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
-        List<EventStore> accounts = eventstoreBrokerService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+    public void pushEventStores(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
+        List<EventStore> eventStores = eventstoreBrokerService.getNewEventStores(lastUpdatedOn.getLastUpdatedOn());
 
         // Set headers and location
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class EventStoreBrokerController {
         // Push newly added bankcard to AccountDB located on the AccountService
         URI uri = new URI(String.format("http://localhost:7200/retrieve_update"));
 
-        HttpEntity<List<EventStore>> httpEntity = new HttpEntity<>(accounts, headers);
+        HttpEntity<List<EventStore>> httpEntity = new HttpEntity<>(eventStores, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, EventStore.class);
     }
