@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,21 +30,21 @@ public class NFCReaderController {
         return NFCReaderService.getAccounts();
     }
 
-    @PostMapping(path = "api/v1/nfcreader/eventstore")
-    public void validateBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
+    @PostMapping(path = "api/v1/nfcreader/eventstore/{station}")
+    public void validateBankCard(
+            @PathVariable String station,
+            @RequestBody BankCard BankCard) throws URISyntaxException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Long uuid = NFCReaderService.validateBankCard(BankCard);
         Date date = new Date();
-        String location = "utrecht";
-        Integer tycoon = 1;
+        String location = station;
 
         EventStore utrecht = new EventStore(
                 uuid,
                 date,
-                location,
-                tycoon
+                location
         );
 
         URI uri = new URI("http://localhost:9100/eventstore/add");

@@ -12,12 +12,12 @@ public class Route {
     private String stationA;
     private String stationB;
     private Float price;
-    private String tycoon;
+    private Integer tycoon;
 
     public Route() {
     }
 
-    public Route(Long id, String stationA, String stationB, Float price, String tycoon) {
+    public Route(Long id, String stationA, String stationB, Float price, Integer tycoon) {
         this.id = id;
         this.stationA = stationA;
         this.stationB = stationB;
@@ -57,11 +57,11 @@ public class Route {
         this.price = price;
     }
 
-    public String getTycoon() {
-        return this.tycoon;
+    public Integer getTycoon() {
+        return tycoon;
     }
 
-    public void setTycoon(String tycoon) {
+    public void setTycoon(Integer tycoon) {
         this.tycoon = tycoon;
     }
 
@@ -85,7 +85,7 @@ public class Route {
         return this;
     }
 
-    public Route tycoon(String tycoon) {
+    public Route tycoon(Integer tycoon) {
         setTycoon(tycoon);
         return this;
     }

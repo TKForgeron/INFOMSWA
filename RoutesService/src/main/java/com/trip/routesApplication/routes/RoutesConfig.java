@@ -17,37 +17,37 @@ public class RoutesConfig {
                                         "Apeldoorn",
                                         "Barneveld",
                                         5f,
-                                        "Verbindding");
+                                        1);
                         Route Blue_BE = new Route(
                                         2L,
                                         "Barneveld",
                                         "Ede",
                                         5f,
-                                        "Nederlandse Sportvereniging");
+                                        2);
                         Route Blue_EU = new Route(
                                         3L,
                                         "Ede",
                                         "Utrecht",
                                         6f,
-                                        "Nederlandse Sportvereniging");
+                                        2);
                         Route Green = new Route(
                                         4L,
                                         "Utrecht",
                                         "Amersfoort",
                                         3f,
-                                        "Blauwnet-niet");
+                                        3);
                         Route Red = new Route(
                                         5L,
                                         "Amersfoort",
                                         "Barneveld",
                                         2f,
-                                        "Thais");
+                                        4);
                         Route Blue_BU = new Route(
                                         6L,
                                         "Barneveld",
                                         "Utrecht",
                                         7f,
-                                        "Nederlandse Sportvereniging");
+                                        2);
 
                         repository.saveAll(
                                         List.of(Purple, Blue_BE, Blue_EU, Green, Red, Blue_BU));
