@@ -46,6 +46,7 @@ public class RoutesService {
         String stationA = routeToBe.getStationA();
         String stationB = routeToBe.getStationB();
         Float price = routeToBe.getPrice();
+        Integer tycoonId = routeToBe.getTycoonId();
         String tycoon = routeToBe.getTycoon();
         if (stationA != null && stationA.length() > 0) {
             routeCurrent.setStationA(stationA);
@@ -58,6 +59,9 @@ public class RoutesService {
         }
         if (tycoon != null && tycoon.length() > 0) {
             routeCurrent.setTycoon(tycoon);
+        }
+        if (tycoonId != null) {
+            routeCurrent.setTycoonId(tycoonId);
         }
 
         return routeCurrent;

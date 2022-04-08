@@ -95,16 +95,6 @@ public class Route {
         return this;
     }
 
-    public Route tycoonId(Integer tycoonId) {
-        setTycoonId(tycoonId);
-        return this;
-    }
-
-    public Route tycoon(String tycoon) {
-        setTycoon(tycoon);
-        return this;
-    }
-
     // own implementation: A-B equals B-A, id doesn't matter
     public boolean isLike(Object o) {
         if (o == this)

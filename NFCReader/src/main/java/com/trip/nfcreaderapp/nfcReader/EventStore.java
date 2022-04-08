@@ -20,7 +20,6 @@ public class EventStore {
     private Long UUID;
     private Date date;
     private String location;
-    private Integer tycoon;
 
     public EventStore() {
     }
@@ -36,21 +35,6 @@ public class EventStore {
         this.UUID = UUID;
         this.date = date;
         this.location = location;
-    }
-
-    public EventStore(Long UUID, Date date, String location, Integer tycoon) {
-        this.UUID = UUID;
-        this.date = date;
-        this.location = location;
-        this.tycoon = tycoon;
-    }
-
-    public Integer getTycoon() {
-        return tycoon;
-    }
-
-    public void setTycoon(Integer tycoon) {
-        this.tycoon = tycoon;
     }
 
     public Long getId() {
@@ -92,7 +76,6 @@ public class EventStore {
                 ", UUID=" + UUID +
                 ", date=" + date +
                 ", location='" + location + '\'' +
-                ", tycoon=" + tycoon +
                 '}';
     }
 }
