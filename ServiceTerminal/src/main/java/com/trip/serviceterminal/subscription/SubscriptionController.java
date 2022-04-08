@@ -73,10 +73,12 @@ public class SubscriptionController {
     public List<Subscription> fetchUserSubscriptions(@PathVariable("nfcId") Integer nfcId) throws URISyntaxException {
         URI uri = new URI(String.format("http://localhost:7100/account/%1$s/get/subscriptions", nfcId));
         RestTemplate restTemplate = new RestTemplate();
-        int[] subIds = restTemplate.getForObject(uri, int[].class);
+        Long[] subIds = restTemplate.getForObject(uri, Long[].class);
         Subscription[] allPossibleSubscriptions = fetchSubscriptions();
+
         List<Subscription> userSubs = new ArrayList<>();
         for (Subscription sub : allPossibleSubscriptions) {
+
             if (Arrays.asList(subIds).contains(sub.getId())) {
                 userSubs.add(sub);
             }
