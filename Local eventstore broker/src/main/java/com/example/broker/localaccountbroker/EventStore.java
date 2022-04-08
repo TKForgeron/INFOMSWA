@@ -1,4 +1,5 @@
-package com.trip.nfcreaderapp.nfcReader;
+package com.example.broker.localaccountbroker;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -45,14 +46,6 @@ public class EventStore {
         this.tycoon = tycoon;
     }
 
-    public Integer getTycoon() {
-        return tycoon;
-    }
-
-    public void setTycoon(Integer tycoon) {
-        this.tycoon = tycoon;
-    }
-
     public Long getId() {
         return id;
     }
@@ -83,6 +76,14 @@ public class EventStore {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getTycoon() {
+        return tycoon;
+    }
+
+    public void setTycoon(Integer tycoon) {
+        this.tycoon = tycoon;
     }
 
     @Override

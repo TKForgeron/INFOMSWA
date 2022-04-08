@@ -1,4 +1,5 @@
-package com.trip.nfcreaderapp.nfcReader;
+package com.trip.eventservice.eventstore;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,31 +26,10 @@ public class EventStore {
     public EventStore() {
     }
 
-    public EventStore(Long id, Long UUID, Date date, String location) {
-        this.id = id;
-        this.UUID = UUID;
-        this.date = date;
-        this.location = location;
-    }
-
-    public EventStore(Long UUID, Date date, String location) {
-        this.UUID = UUID;
-        this.date = date;
-        this.location = location;
-    }
-
     public EventStore(Long UUID, Date date, String location, Integer tycoon) {
         this.UUID = UUID;
         this.date = date;
         this.location = location;
-        this.tycoon = tycoon;
-    }
-
-    public Integer getTycoon() {
-        return tycoon;
-    }
-
-    public void setTycoon(Integer tycoon) {
         this.tycoon = tycoon;
     }
 
@@ -83,6 +63,14 @@ public class EventStore {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getTycoon() {
+        return tycoon;
+    }
+
+    public void setTycoon(Integer tycoon) {
+        this.tycoon = tycoon;
     }
 
     @Override

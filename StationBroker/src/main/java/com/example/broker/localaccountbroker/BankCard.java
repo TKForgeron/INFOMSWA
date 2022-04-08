@@ -1,49 +1,38 @@
-package com.trip.serviceterminal.bankcard;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+package com.example.broker.localaccountbroker;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table
 public class BankCard {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "nfc_sequence", sequenceName = "nfc_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nfc_sequence")
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Boolean deleted;
     private Date createdAt;
-    private Boolean deleted = Boolean.FALSE;
 
     public BankCard() {
     }
 
-    public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
-        this.iban = iban;
-    }
-
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date createdAt, Boolean deleted) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
-    }
-
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, Date createdAt) {
-        this.uuid = uuid;
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
         this.createdAt = createdAt;
+        this.deleted = deleted;
     }
 
-    public boolean isExpired() {
-        return LocalDate.now().isAfter(this.expiryDate);
+    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId) {
+        this.uuid = uuid;
+        this.expiryDate = expiryDate;
+        this.nfcId = nfcId;
     }
 
     public Long getUuid() {

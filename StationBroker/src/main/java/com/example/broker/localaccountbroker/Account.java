@@ -1,49 +1,35 @@
-package com.trip.serviceterminal.bankcard;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+package com.example.broker.localaccountbroker;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class BankCard {
+@Table
+public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uuid;
     private LocalDate expiryDate;
     private Integer nfcId;
     private String iban;
+    private Boolean deleted;
     private Date createdAt;
-    private Boolean deleted = Boolean.FALSE;
+    private Date updatedOn;
+    //private List<Long> subscriptionIds;
 
-    public BankCard() {
+    public Account() {
     }
 
-    public BankCard(LocalDate expiryDate, Integer nfcId, String iban) {
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
-        this.iban = iban;
-    }
-
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Boolean deleted, Date createdAt, Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
-    }
-
-    public BankCard(Long uuid, LocalDate expiryDate, Integer nfcId, Date createdAt) {
-        this.uuid = uuid;
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
+        this.deleted = deleted;
         this.createdAt = createdAt;
-    }
-
-    public boolean isExpired() {
-        return LocalDate.now().isAfter(this.expiryDate);
+        this.updatedOn = updatedOn;
     }
 
     public Long getUuid() {
@@ -78,14 +64,6 @@ public class BankCard {
         this.iban = iban;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -94,15 +72,32 @@ public class BankCard {
         this.deleted = deleted;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
     @Override
     public String toString() {
-        return "BankCard{" +
+        return "Account{" +
                 "uuid=" + uuid +
                 ", expiryDate=" + expiryDate +
                 ", nfcId=" + nfcId +
                 ", iban='" + iban + '\'' +
-                ", createdAt=" + createdAt +
                 ", deleted=" + deleted +
+                ", createdAt=" + createdAt +
+                ", updatedOn=" + updatedOn +
                 '}';
     }
 }

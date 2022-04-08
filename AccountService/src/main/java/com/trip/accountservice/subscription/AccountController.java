@@ -11,18 +11,15 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class AccountController {
 
     private final AccountService accountService;
-    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRepository accountRepository) {
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
-        this.accountRepository = accountRepository;
     }
 
     @GetMapping(path = "accounts")
@@ -30,42 +27,9 @@ public class AccountController {
         return accountService.getAccounts();
     }
 
-    @PostMapping(path = "request_update")
-    public void getAccounts() throws URISyntaxException {
-        // Post date of last update to local broker
-        LastUpdatedOn lastUpdate = new LastUpdatedOn();
-        lastUpdate.setLastUpdatedOn(accountService.lastUpdatedOn());
-        System.out.println(lastUpdate);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI("http://localhost:9000/account/pull");
-        HttpEntity<LastUpdatedOn> httpEntity = new HttpEntity<>(lastUpdate, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(uri, httpEntity, LastUpdatedOn.class);
-    }
-
     @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody Account account) {
-        // Register account
-        registerAccount(account);
-    }
-
-    public void registerAccount(Account account) {
-        Optional<Account> accountOptional = accountRepository
-                .findAccountByUuid(account.getUuid());
-        if (accountOptional.isPresent()) {
-            throw new IllegalStateException("User already exists");
-        }
-
-        accountRepository.save(account);
-    }
-
-    @PostMapping(path = "retrieve_update")
-    public void retrieveUpdate(@RequestBody List<Account> accounts) {
-        // accountRepository.saveAll(accounts);
-        System.out.println(accounts);
+        accountService.registerAccount(account);
     }
 
     @GetMapping(path = "account/{nfcId}/get/subscriptions")
@@ -76,21 +40,23 @@ public class AccountController {
         }
 
         List<Integer> subs = acc.get().getSubscriptionIds();
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
-        System.out.println(subs);
 
         return subs;
     }
 
+    @PostMapping(path = "account/pull")
+    public void pushNewAccounts(@RequestBody LastUpdatedOn lastUpdatedOn) throws URISyntaxException {
+        List<Account> accounts = accountService.getNewAccounts(lastUpdatedOn.getLastUpdatedOn());
+
+        // Set headers and location
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Push newly added bankcard to AccountDB located on the AccountService
+        URI uri = new URI(String.format("http://localhost:9000/retrieve_update"));
+
+        HttpEntity<List<Account>> httpEntity = new HttpEntity<>(accounts, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, httpEntity, Account.class);
+    }
 }

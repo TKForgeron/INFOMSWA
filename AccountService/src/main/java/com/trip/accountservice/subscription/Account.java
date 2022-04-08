@@ -21,6 +21,8 @@ public class Account {
     private Integer nfcId;
     private String iban;
     private String subscriptionIds;
+    private Boolean deleted;
+    private Date createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -31,26 +33,22 @@ public class Account {
     public Account() {
     }
 
-    public Account(LocalDate expiryDate, Integer nfcId, String iban) {
-        this.expiryDate = expiryDate;
-        this.nfcId = nfcId;
-        this.iban = iban;
-    }
-
-    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban) {
+    public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
+        this.updatedOn = updatedOn;
     }
 
     public Account(Long uuid, LocalDate expiryDate, Integer nfcId, String iban, List<Integer> subscriptionIds,
-            Date updatedOn) {
+            Boolean deleted, Date createdAt, Date updatedOn) {
         this.uuid = uuid;
         this.expiryDate = expiryDate;
         this.nfcId = nfcId;
         this.iban = iban;
         this.setSubscriptionIds(subscriptionIds);
+        this.createdAt = createdAt;
         this.updatedOn = updatedOn;
     }
 
@@ -84,6 +82,22 @@ public class Account {
 
     public void setIban(String iban) {
         this.iban = iban;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedOn() {
@@ -122,6 +136,8 @@ public class Account {
                 ", nfcId='" + getNfcId() + "'" +
                 ", iban='" + getIban() + "'" +
                 ", subscriptionIds='" + getSubscriptionIds() + "'" +
+                ", deleted='" + isDeleted() + "'" +
+                ", createdAt='" + getCreatedAt() + "'" +
                 ", updatedOn='" + getUpdatedOn() + "'" +
                 "}";
     }

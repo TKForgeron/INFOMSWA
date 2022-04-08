@@ -33,19 +33,22 @@ public class NFCReaderController {
 
     @PostMapping(path = "api/v1/nfcreader/eventstore")
     public void validateBankCard(@RequestBody BankCard BankCard) throws URISyntaxException {
-        Long uuid = NFCReaderService.validateBankCard(BankCard);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Long uuid = NFCReaderService.validateBankCard(BankCard);
+        Date date = new Date();
         String location = "utrecht";
-        URI uri = new URI(String.format("http://localhost:9000/eventstore/%s", location));
+        Integer tycoon = 1;
 
-        EventStore utrecht = new EventStore();
-        Date date = Calendar.getInstance().getTime();
-        utrecht.setDate(date);
-        utrecht.setLocation(location);
-        utrecht.setUUID(uuid);
+        EventStore utrecht = new EventStore(
+                uuid,
+                date,
+                location,
+                tycoon
+        );
 
+        URI uri = new URI("http://localhost:9100/eventstore/add");
         HttpEntity<EventStore> httpEntity = new HttpEntity<>(utrecht, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, EventStore.class);
