@@ -22,7 +22,6 @@ Please do the following things before running:
         - EventStore
         - Routes
         - PassengerBillsDB
-
     2. For each of the Serviceses, add your username and password in the application.properties file in the corresponding microservice.
 
 To get all accounts: GET http://localhost:7100/accounts
@@ -41,14 +40,16 @@ For checking in and out, and calculating the price afterwards:
         - Eureka DiscoveryServer
      2. First, POST the following two messages:
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Apeldoorn
+        ```
         Content-Type: application/json
 
         {"uuid":1,"expiryDate":"2050-04-05","nfcId":12345}
-
+        ```
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Barneveld
+        ```
         Content-Type: application/json
         
         {"uuid":1,"expiryDate":"2050-04-05","nfcId":12345}
-
+        ```
     3. Afterwards, POST the following: POST http://localhost:7300/build_routes
     4. The route, including the price, will now be printed in the Billing Service logs.
