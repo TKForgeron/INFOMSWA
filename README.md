@@ -40,11 +40,11 @@ For checking in and out, and calculating the price afterwards:
         - Eureka DiscoveryServer
      2. First, POST the following two messages:
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Apeldoorn
-        ```
+        <pre><code>
         Content-Type: application/json
 
         {"uuid":1,"expiryDate":"2050-04-05","nfcId":12345}
-        ```
+        </pre></code>
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Barneveld
         ```
         Content-Type: application/json
