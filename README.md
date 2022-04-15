@@ -25,25 +25,8 @@ Please do the following things before running:
 
     - For each of the Serviceses, add your username and password in the application.properties file in the corresponding microservice.
 
-To add an account:
-    - Start:
-        - Service Terminal
-        - Local Station Broker
-        - NFC Reader
-        - Account Service
-        - Eureka DiscoveryServer
-    - Example POST:
-        POST http://localhost:6000/api/v1/serviceterminal/bankcard/add
-        Content-Type: application/json
-
-        {
-        "uuid":7,
-        "expiryDate": "2030-01-01",
-        "nfcId": 123910,
-        "iban": "NL51RABO012310943891"
-        } 
-
 To get all accounts: GET http://localhost:7100/accounts
+To get all eventstores: GET http://localhost:7200/eventstores
 
 For checking in and out, and calculating the price afterwards:
     - Start:
