@@ -16,7 +16,7 @@
 
 Please do the following things before running:
 
-1. Create the following databases:
+1. Create the following postgres databases on port 5432:
    - AccountDB
    - EventQueue
    - AccountDB_Broker
