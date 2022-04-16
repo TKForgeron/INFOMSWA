@@ -45,14 +45,14 @@ For checking in and out, and calculating the price afterwards:
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Apeldoorn
         
         Content-Type: application/json
-
+```json
         {"uuid":1,"expiryDate":"2050-04-05","nfcId":12345}
-        
+       ``` 
         POST http://localhost:8080/api/v1/nfcreader/eventstore/Barneveld
         
         Content-Type: application/json
-        
+        ```json
         {"uuid":1,"expiryDate":"2050-04-05","nfcId":12345}
-        
+        ```
     3. Afterwards, POST the following: POST http://localhost:7300/build_routes
     4. The route, including the price, will now be printed in the Billing Service logs.
