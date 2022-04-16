@@ -19,6 +19,15 @@ public class AccountService {
         return AccountRepository.findAll();
     }
 
+    public String getAccountIban(Long uuid) {
+        Optional<Account> account = AccountRepository.findById(uuid);
+        if (!account.isPresent()) {
+            throw new IllegalStateException("User does not exist");
+        }
+
+        return account.get().getIban();
+    }
+
     public List<Integer> getAccountSubscriptionsByNfcId(Integer nfcId) {
         Optional<Account> acc = AccountRepository.findAccountByNfcId(nfcId);
         if (!acc.isPresent()) {

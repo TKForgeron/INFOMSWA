@@ -24,21 +24,21 @@ public class AccountConfig {
                         // this.deleted = deleted;
                         // this.createdAt = createdAt;
                         // this.updatedOn = updatedOn;
-                        Account fred = new Account(
+                        Account henk = new Account(
                                         1L,
                                         LocalDate.of(2050, APRIL, 5),
-                                        12346,
+                                        12345,
                                         "NL99RABO1234567890",
-                                        Arrays.asList(1, 2),
+                                        Arrays.asList(2),
                                         false,
                                         new Date(),
                                         new Date());
-                        Account henk = new Account(
+                        Account fred = new Account(
                                         2L,
                                         LocalDate.of(2025, APRIL, 1),
-                                        12345,
+                                        12346,
                                         "NL99INGB1234567890",
-                                        Arrays.asList(2),
+                                        Arrays.asList(1, 2),
                                         false,
                                         new Date(),
                                         new Date());
@@ -47,7 +47,7 @@ public class AccountConfig {
                                         LocalDate.of(2022, APRIL, 30),
                                         99999,
                                         "NL00BUNQ1234567890",
-                                        Arrays.asList(),
+                                        Arrays.asList(0),
                                         false,
                                         new Date(),
                                         new Date());

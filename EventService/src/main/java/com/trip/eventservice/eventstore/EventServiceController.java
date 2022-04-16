@@ -18,7 +18,8 @@ public class EventServiceController {
     private final EventServiceRepository eventServiceRepository;
 
     @Autowired
-    public EventServiceController(EventServiceService eventServiceService, EventServiceRepository eventServiceRepository) {
+    public EventServiceController(EventServiceService eventServiceService,
+            EventServiceRepository eventServiceRepository) {
         this.eventServiceService = eventServiceService;
         this.eventServiceRepository = eventServiceRepository;
     }
@@ -28,7 +29,7 @@ public class EventServiceController {
         return eventServiceService.getEventStores();
     }
 
-    @PostMapping(path="request_update")
+    @PostMapping(path = "request_update")
     public void getNewEventStores() throws URISyntaxException {
         // Post date of last update to local broker
         LastUpdatedOn lastUpdate = new LastUpdatedOn();
@@ -59,13 +60,12 @@ public class EventServiceController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Push newly added accounts to billingService
-        URI uri = new URI(String.format("http://localhost:7300/retrieve_eventstores"));
+        // Push newly added events to InvoicingService
+        URI uri = new URI(String.format("http://localhost:7300/invoicing/retrieve_eventstores"));
 
         HttpEntity<List<EventStore>> httpEntity = new HttpEntity<>(eventStores, headers);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, httpEntity, EventStore.class);
     }
-
 
 }

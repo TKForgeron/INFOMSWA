@@ -16,7 +16,11 @@ public class SubscriptionConfig {
                         // private String tycoon;
                         // private Integer discountPercentage;
                         // private String description;
-
+                        Subscription noSubscription = new Subscription(
+                                        0L,
+                                        1,
+                                        0,
+                                        "You are just registered, this is not a subscription");
                         Subscription offpeakNS = new Subscription(
                                         1L,
                                         3,
@@ -40,7 +44,7 @@ public class SubscriptionConfig {
                                         "Valid for routes of Thais tycoon, free travelling 24/7");
 
                         repository.saveAll(
-                                        List.of(offpeakNS, offpeakVerbindding, fullNS, fullThais));
+                                        List.of(noSubscription, offpeakNS, offpeakVerbindding, fullNS, fullThais));
                 };
         }
 }

@@ -16,7 +16,7 @@ import com.trip.collectionservice.pspObject.PSPObject;
 public class CollectionService {
 
     public PSPObject collectMoneyForUuid(Long uuid) throws URISyntaxException {
-        URI invoice_uri = new URI(String.format("http://localhost:7300/invoices/%s", String.valueOf(uuid)));
+        URI invoice_uri = new URI(String.format("http://localhost:7300/invoicing/invoices/%s", String.valueOf(uuid)));
         RestTemplate restTemplate = new RestTemplate();
         PassengerRoute[] passengerRoutes = restTemplate.getForObject(invoice_uri, PassengerRoute[].class);
 

@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-
 @RestController
 @RequestMapping
 public class EventStoreBrokerController {
@@ -27,7 +26,7 @@ public class EventStoreBrokerController {
         return eventstoreBrokerService.getEventStores();
     }
 
-    @PostMapping(path="eventstore/add")
+    @PostMapping(path = "eventstore/add")
     public void registerBankCard(
             @RequestBody EventStore eventStore) {
         eventstoreBrokerService.registerEventStore(eventStore);

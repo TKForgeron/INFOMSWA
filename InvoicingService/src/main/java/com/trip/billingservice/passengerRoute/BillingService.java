@@ -12,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-
 @Service
 public class BillingService {
 
@@ -22,7 +21,7 @@ public class BillingService {
         this.billingRepository = billingRepository;
     }
 
-    public Date lastUpdatedOn(){
+    public Date lastUpdatedOn() {
         // If no date is found, set date to start of day
         Date date = new Date();
         Calendar cal = new GregorianCalendar();
@@ -63,16 +62,17 @@ public class BillingService {
 
     public Float calculatePrice(Long uuid, String startLocation, String endLocation) throws URISyntaxException {
         RestTemplate restTemplate = new RestTemplate();
-        URI routeURI = new URI(String.format("http://localhost:4500/api/v1/route/%1$s/%2$s", startLocation, endLocation));
+        URI routeURI = new URI(
+                String.format("http://localhost:4500/api/v1/route/%1$s/%2$s", startLocation, endLocation));
         Route routeEntity = restTemplate.getForObject(routeURI, Route.class);
         Float price = routeEntity.getPrice();
         Integer tycoon = routeEntity.getTycoonId();
         List<Subscription> subscriptions = fetchUserSubscriptions(uuid);
         System.out.println(subscriptions);
 
-        for (Subscription s:subscriptions) {
-            if(s.getTycoonId() == tycoon) {
-                Float discount = price * s.getDiscountPercentage()/100;
+        for (Subscription s : subscriptions) {
+            if (s.getTycoonId() == tycoon) {
+                Float discount = price * s.getDiscountPercentage() / 100;
                 price -= discount;
             }
         }
@@ -81,6 +81,13 @@ public class BillingService {
     }
 
     public PassengerRoute buildRoutes(List<EventStore> eventStores) throws URISyntaxException {
+        System.out.println("*****************************");
+        System.out.println();
+        System.out.println();
+        System.out.println("In BillingService.buildRoutes()...");
+        System.out.println();
+        System.out.println();
+        System.out.println("*****************************");
         if (eventStores.size() > 1) {
             EventStore startEvent = eventStores.get(0);
             EventStore endEvent = eventStores.get(1);
@@ -93,11 +100,22 @@ public class BillingService {
                     calculatePrice(
                             startEvent.getUUID(),
                             startEvent.getLocation(),
-                            endEvent.getLocation()
-                    )
-            );
+                            endEvent.getLocation()));
             return route;
         }
         return null;
     }
+
+    public PassengerRoute getUserInvoices(Long uuid) {
+        Optional<PassengerRoute> psr = billingRepository.findById(uuid);
+        if (!psr.isPresent()) {
+            throw new IllegalStateException("uuid does not exist!");
+        }
+        return psr.get();
+    }
+
+    public List<PassengerRoute> getAllInvoices() {
+        return billingRepository.findAll();
+    }
+
 }

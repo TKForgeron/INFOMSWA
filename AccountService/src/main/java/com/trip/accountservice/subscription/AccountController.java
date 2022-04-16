@@ -28,6 +28,11 @@ public class AccountController {
         return AccountService.getAccounts();
     }
 
+    @GetMapping(path = "account/{uuid}/iban")
+    public String getAccountIban(@PathVariable("uuid") Long uuid) {
+        return AccountService.getAccountIban(uuid);
+    }
+
     @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody Account account) {
         AccountService.registerAccount(account);
