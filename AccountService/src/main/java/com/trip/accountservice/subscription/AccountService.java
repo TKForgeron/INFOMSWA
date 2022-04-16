@@ -1,6 +1,8 @@
 package com.trip.accountservice.subscription;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +13,7 @@ public class AccountService {
 
     private final AccountRepository AccountRepository;
 
+    @Autowired
     public AccountService(AccountRepository AccountRepository) {
         this.AccountRepository = AccountRepository;
     }
@@ -63,5 +66,19 @@ public class AccountService {
             throw new IllegalStateException("User already exists");
         }
         AccountRepository.save(account);
+    }
+
+    @Transactional
+    public Account addSubscriptionToUser(Integer nfcId, Long subId) {
+        Account accountCurrent = AccountRepository.findAccountByNfcId(nfcId)
+                .orElseThrow(() -> new IllegalStateException("nfcId does not exist!"));
+
+        if (subId != null) {
+            List<Integer> currentSubs = accountCurrent.getSubscriptionIds();
+            currentSubs.add((int) (long) subId);
+            accountCurrent.setSubscriptionIds(currentSubs);
+        }
+
+        return accountCurrent;
     }
 }

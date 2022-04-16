@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping(path = "api/v1/serviceterminal/ticket/")
+@RequestMapping(path = "serviceterminal/ticket/")
 public class TicketController {
 
     @GetMapping(path = "{ticketId}")

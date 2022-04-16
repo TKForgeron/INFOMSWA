@@ -1,0 +1,622 @@
+{
+	"info": {
+		"_postman_id": "6cf77dda-9ec8-40b7-883a-ccd5ff9bfd67",
+		"name": "TrIP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "nfcreader",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/nfcreader",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"nfcreader"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nfcreader/eventstore/Apeldoorn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": 1,\r\n    \"expiryDate\": \"2025-04-05\",\r\n    \"nfcId\": 12345\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/nfcreader/eventstore/Apeldoorn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"nfcreader",
+						"eventstore",
+						"Apeldoorn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nfcreader/eventstore/Barneveld",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": 1,\r\n    \"expiryDate\": \"2025-04-05\",\r\n    \"nfcId\": 12345\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/nfcreader/eventstore/Barneveld",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"nfcreader",
+						"eventstore",
+						"Barneveld"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/bankcard/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiryDate\": \"2030-04-05\",\r\n    \"nfcId\": 11111,\r\n    \"iban\": \"NL00INGB1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/bankcard/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"bankcard",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/subscription/add/1/for_user/11111",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiryDate\": \"2050-04-05\",\r\n    \"nfcId\": 12345,\r\n    \"iban\": \"NL99INGB1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/subscription/add/1/for_user/11111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"subscription",
+						"add",
+						"1",
+						"for_user",
+						"11111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/subscription/all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiryDate\": \"2050-04-05\",\r\n    \"nfcId\": 12345,\r\n    \"iban\": \"NL99INGB1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/subscription/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"subscription",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/subscription/all/for_user/11111",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiryDate\": \"2050-04-05\",\r\n    \"nfcId\": 12345,\r\n    \"iban\": \"NL99INGB1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/subscription/all/for_user/11111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"subscription",
+						"all",
+						"for_user",
+						"11111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/bankcard/12345",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nfcId\": 12345,\r\n    \"expiryDate\": \"2025-04-05\",\r\n    \"iban\": \"NL33RABO1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/bankcard/12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"bankcard",
+						"12345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serviceterminal/ticket/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6000/serviceterminal/ticket/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6000",
+					"path": [
+						"serviceterminal",
+						"ticket",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "route/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4500/api/v1/route/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"v1",
+						"route",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "route/add (id=7)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 7,\r\n    \"stationA\": \"Rotterdam\",\r\n    \"stationB\": \"Amsterdam\",\r\n    \"price\": 12,\r\n    \"tycoonId\": 1,\r\n    \"tycoon\": \"Thais\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/v1/route/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"v1",
+						"route",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "route/update/7",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 7,\r\n    \"stationA\": \"Amsterdam\",\r\n    \"stationB\": \"Groningen\",\r\n    \"price\": 28,\r\n    \"tycoonId\": 3,\r\n    \"tycoon\": \"Nederlandse Sportvereniging\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/v1/route/update/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"v1",
+						"route",
+						"update",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "route/delete/7",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 7,\r\n    \"stationA\": \"Amsterdam\",\r\n    \"stationB\": \"Groningen\",\r\n    \"price\": 28,\r\n    \"tycoonId\": 3,\r\n    \"tycoon\": \"Nederlandse Sportvereniging\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/v1/route/delete/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"v1",
+						"route",
+						"delete",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscription/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4900/subscription/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4900",
+					"path": [
+						"subscription",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscription/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5,\r\n    \"tycoonId\": 2,\r\n    \"discountPercentage\": 40,\r\n    \"description\": \"Valid for routes of Blauwnet-niet tycoon, 40% off outside of peak hours\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4900/subscription/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4900",
+					"path": [
+						"subscription",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscription/update/5",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5,\r\n    \"tycoonId\": 2,\r\n    \"discountPercentage\": 100,\r\n    \"description\": \"Valid for routes of Blauwnet-niet tycoon, free travelling 24/7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4900/subscription/update/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4900",
+					"path": [
+						"subscription",
+						"update",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscription/delete/5",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5,\r\n    \"tycoonId\": 2,\r\n    \"discountPercentage\": 100,\r\n    \"description\": \"Valid for routes of Blauwnet-niet tycoon, free travelling 24/7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4900/subscription/delete/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4900",
+					"path": [
+						"subscription",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "collect/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7800/collect/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7800",
+					"path": [
+						"collect",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invoicing/build_routes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7300/invoicing/build_routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7300",
+					"path": [
+						"invoicing",
+						"build_routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invoicing/invoices/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7300/invoicing/invoices/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7300",
+					"path": [
+						"invoicing",
+						"invoices",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invoicing/invoices/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7300/invoicing/invoices/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7300",
+					"path": [
+						"invoicing",
+						"invoices",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eventstores (EventService)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7200/eventstores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7200",
+					"path": [
+						"eventstores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "accounts (AccountService)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7100/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7100",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,4 +1,4 @@
-package com.trip.serviceterminal.subscription;
+package com.trip.accountservice.subscription;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -25,7 +25,7 @@ public class NFCReaderController {
     }
 
     // ONLY FOR TESTING
-    @GetMapping(path = "api/v1/nfcreader")
+    @GetMapping(path = "nfcreader")
     public List<BankCard> getAccounts() {
         return NFCReaderService.getAccounts();
     }
@@ -44,8 +44,7 @@ public class NFCReaderController {
         EventStore utrecht = new EventStore(
                 uuid,
                 date,
-                location
-        );
+                location);
 
         URI uri = new URI("http://localhost:9100/eventstore/add");
         HttpEntity<EventStore> httpEntity = new HttpEntity<>(utrecht, headers);

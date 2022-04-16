@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping(path = "api/v1/serviceterminal/bankcard/")
+@RequestMapping(path = "serviceterminal/bankcard/")
 public class BankCardController {
 
     @PostMapping(path = "add")
@@ -25,6 +25,14 @@ public class BankCardController {
             throw new IllegalStateException("Bank card cannot be registered, it is expired!");
         }
 
+        // private Long uuid;
+        // private LocalDate expiryDate;
+        // private Integer nfcId;
+        // private String iban;
+        // private String subscriptionIds;
+        // private Boolean deleted;
+        // private Date createdAt;
+
         // Create new account for Account Service
         Date now = new Date();
         Account newAccount = new Account(
@@ -32,10 +40,18 @@ public class BankCardController {
                 bankCard.getExpiryDate(),
                 bankCard.getNfcId(),
                 bankCard.getIban(),
-                Arrays.asList(),
+                Arrays.asList(0),
                 bankCard.isDeleted(),
                 now,
                 now);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
+        System.out.println(newAccount);
 
         HttpHeaders headers = new HttpHeaders();
         RestTemplate restTemplate = new RestTemplate();

@@ -33,6 +33,11 @@ public class AccountController {
         return AccountService.getAccountIban(uuid);
     }
 
+    @PostMapping(path = "account/{nfcId}/add/subscription")
+    public Account addNewSubscription(@PathVariable("nfcId") Integer nfcId, @RequestBody Subscription sub) {
+        return AccountService.addSubscriptionToUser(nfcId, sub.getId());
+    }
+
     @PostMapping(path = "account/add")
     public void registerBankCard(@RequestBody Account account) {
         AccountService.registerAccount(account);

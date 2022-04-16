@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping(path = "api/v1/serviceterminal/subscription/")
+@RequestMapping(path = "serviceterminal/subscription/")
 public class SubscriptionController {
 
     @DeleteMapping(path = "delete/{subId}/for_user/{nfcIdPath}")
@@ -37,15 +37,14 @@ public class SubscriptionController {
         // System.out.println(subscription.toString(), "\n ...deleted");
     }
 
-    @PostMapping(path = "add/{subId}/for_user/{nfcIdPath}")
+    @PostMapping(path = "add/for_user/{nfcIdPath}")
     public void addNewSubscription(
-            @PathVariable("subId") Integer subId,
             @PathVariable("nfcIdPath") Integer nfcIdPath,
             @RequestBody(required = true) Subscription subscription) throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        URI uri = new URI(String.format("http://localhost:7100/account/%1$s/add/subscription/%2$s", nfcIdPath, subId));
+        URI uri = new URI(String.format("http://localhost:7100/account/%s/add/subscription", nfcIdPath));
 
         HttpEntity<Subscription> httpEntity = new HttpEntity<>(subscription, headers);
 
