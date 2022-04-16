@@ -12,6 +12,7 @@
 - 9000 Local Station Broker (Local Account Broker)
 - 9100 Local EventStore Broker
 
+## Setup
 Please do the following things before running:
     1. Create the following databases:
         - AccountDB 
@@ -22,11 +23,13 @@ Please do the following things before running:
         - EventStore
         - Routes
         - PassengerBillsDB
-    2. For each of the Serviceses, add your username and password in the application.properties file in the corresponding microservice.
+    2. For each of the Services, add your username and password in the application.properties file in the corresponding microservice.
 
+## Eavesdropping
 To get all accounts: GET http://localhost:7100/accounts
 To get all eventstores: GET http://localhost:7200/eventstores
 
+## Happy path
 For checking in and out, and calculating the price afterwards:
     1. Start:
         - NFC Reader
